@@ -66,6 +66,7 @@ public:
 
     void clear()
     {
+        qDebug() << "------------------------------------------" << endl;
         qDebug() << "open表的原始尺寸" << open.size() << endl;
         qDebug() << "open表的原始内存" << open.capacity() << endl;
         qDebug() << "openTable表的原始内存" << openTable.capacity() << endl;
@@ -77,8 +78,9 @@ public:
         vector<QString>().swap(closeTable);
         qDebug() << "open表的当前尺寸" << open.size() << endl;
         qDebug() << "open表的当前内存" << open.capacity() << endl;
-        qDebug() << "openTable表的原始内存" << openTable.capacity() << endl;
-        qDebug() << "openTable表的原始内存" << openTable.capacity() << endl;
+        qDebug() << "openTable表的当前内存" << openTable.capacity() << endl;
+        qDebug() << "openTable表的当前内存" << openTable.capacity() << endl;
+        qDebug() << "------------------------------------------" << endl;
     }
 
     bool isOdevity();

@@ -88,14 +88,14 @@ QString MainWindow::getString(QLineEdit *a[9])
     return str;
 }
 
-//输出单步路径
-void MainWindow::ouputPath(QString signlePath)
+//输出单步路径，参数为当前的步数和当前状态
+void MainWindow::ouputPath(int num, QString signlePath)
 {
     //清除起始路径
     clearLineEdit(orign_line);
     //重新设置起始路径
     setLineEdit(signlePath, orign_line);
-    ui->path_textBrowser->insertPlainText(signlePath + "\n");
+    ui->path_textBrowser->insertPlainText("第" + QString::number(num) + "步 : " + signlePath + "\n");
 }
 
 //延时函数
@@ -115,13 +115,29 @@ void wait(int times)
 void MainWindow::on_strart_pushButton_clicked()
 {
     ui->path_textBrowser->clear();
+    //禁用单步执行按钮
+    ui->sigleStep_pushButton->setDisabled(true);
+    //禁用清空按钮
+    ui->clear_pushButton->setDisabled(true);
+    //禁用生成状态和计算路径按钮
+    ui->creatPath_pushButton->setDisabled(true);
+    ui->random_pushButton->setDisabled(true);
+
     for (int i = 0; i < game.path.size(); i++)
     {
-        ouputPath(QString::fromStdString(game.path[i].str));
+        ouputPath(i + 1, QString::fromStdString(game.path[i].str));
         wait(1000);
     }
     QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLength) + "步");
-    ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLength) + "步");
+    //ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLength) + "步");
+
+    //恢复单步执行按钮
+    ui->sigleStep_pushButton->setEnabled(true);
+    //恢复清空按钮
+    ui->clear_pushButton->setEnabled(true);
+    //恢复生成状态和计算路径按钮
+    ui->creatPath_pushButton->setEnabled(true);
+    ui->random_pushButton->setEnabled(true);
 }
 
 string randomStr()
@@ -190,7 +206,8 @@ void MainWindow::on_clear_pushButton_clicked()
 void MainWindow::on_sigleStep_pushButton_clicked()
 {
 
-    ouputPath(QString::fromStdString(game.path[0].str));
+    int num = game.pathLength - game.path.size();
+    ouputPath(num, QString::fromStdString(game.path[0].str));
     if (game.path.size() == 0)
     {
         QMessageBox::warning(this, tr("警告"), tr("已到达"));
