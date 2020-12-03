@@ -25,7 +25,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -41,7 +41,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -57,8 +57,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>14</pointsize>
+      <family>Consolas</family>
+      <pointsize>16</pointsize>
      </font>
     </property>
    </widget>
@@ -73,8 +73,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -92,8 +92,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -111,8 +111,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -130,8 +130,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -149,8 +149,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -168,8 +168,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -187,8 +187,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -206,8 +206,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -225,8 +225,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -244,8 +244,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -263,8 +263,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -282,8 +282,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -301,8 +301,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -320,8 +320,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -339,8 +339,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -358,8 +358,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -377,8 +377,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -396,8 +396,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
-      <pointsize>16</pointsize>
+      <family>Consolas</family>
+      <pointsize>26</pointsize>
      </font>
     </property>
     <property name="readOnly">
@@ -407,7 +407,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>50</x>
       <y>30</y>
       <width>261</width>
       <height>71</height>
@@ -415,7 +415,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -434,7 +434,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -453,7 +453,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -472,7 +472,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -491,7 +491,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -510,7 +510,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -529,7 +529,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -548,7 +548,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -567,7 +567,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -586,7 +586,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -620,7 +620,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -639,7 +639,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Agency FB</family>
+      <family>Consolas</family>
       <pointsize>14</pointsize>
      </font>
     </property>

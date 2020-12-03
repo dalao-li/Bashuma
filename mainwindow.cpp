@@ -44,35 +44,22 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//判断输入是否合法
-bool MainWindow::judegInput(QLineEdit *a[9])
-{
-    //记录是否有空格
-    bool isBlank = false;
-    QSet<QString> num;
-    //bool num[9] = {false};
-    for (int i = 0; i < 9; i++)
-    {
-        if (a[i]->text() == "0")
-        {
-            isBlank = true;
-        }
-        num.insert(a[i]->text());
-    }
-    if (!isBlank)
-    {
-        QMessageBox::warning(this, tr("警告"), tr("没有空格输入"));
-        return false;
-    }
-}
-
 //设置九宫格默认输入
 void MainWindow::setLineEdit(QString str, QLineEdit *a[9])
 {
     for (int i = 0; i < 9; i++)
     {
         //截取一个字符
-        a[i]->setText(str.mid(i, 1));
+        QString s = str.mid(i, 1);
+        a[i]->setText(s);
+        // int n = atoi(s.toStdString().c_str());
+        // if (n == 0)
+        // {
+        //     //0背景设为红色
+        //     QPalette palette = a[i]->palette();
+        //     palette.setColor(QPalette::Normal, QPalette::PlaceholderText, Qt::red);
+        //     a[i]->setPalette(palette);
+        // }
     }
 }
 
@@ -84,7 +71,7 @@ QString MainWindow::getString(QLineEdit *a[9])
     {
         str += a[i]->text();
     }
-    qDebug() << str << endl;
+    //qDebug() << str << endl;
     return str;
 }
 
@@ -111,9 +98,16 @@ void wait(int times)
     }
 }
 
-//开始完全输出八数码
+//自动输出八数码求解路径
 void MainWindow::on_strart_pushButton_clicked()
 {
+    //异常判断
+    if (game.pathLength == 0)
+    {
+        QMessageBox::warning(NULL, "警告", "请先生成路径");
+        return;
+    }
+
     ui->path_textBrowser->clear();
     //禁用单步执行按钮
     ui->sigleStep_pushButton->setDisabled(true);
@@ -205,7 +199,12 @@ void MainWindow::on_clear_pushButton_clicked()
 //单步执行
 void MainWindow::on_sigleStep_pushButton_clicked()
 {
-
+    //异常判断
+    if (game.pathLength == 0)
+    {
+        QMessageBox::warning(NULL, "警告", "请先生成路径");
+        return;
+    }
     int num = game.pathLength - game.path.size();
     ouputPath(num, QString::fromStdString(game.path[0].str));
     if (game.path.size() == 0)
@@ -223,10 +222,6 @@ void MainWindow::on_sigleStep_pushButton_clicked()
 //生成路径
 void MainWindow::on_creatPath_pushButton_clicked()
 {
-    if (!judegInput(orign_line) || !judegInput(end_line))
-    {
-        return;
-    }
     str1 = getString(orign_line);
     str2 = getString(end_line);
     //给状态f赋值

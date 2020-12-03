@@ -25,8 +25,6 @@ public:
     Game game = *new Game("", "");
 
     QString str1, str2;
-    //判断输入合法性
-    bool judegInput(QLineEdit *a[9]);
 
     //清除输入
     void clearLineEdit(QLineEdit *a[9]);
@@ -38,7 +36,7 @@ public:
     QString getString(QLineEdit *a[9]);
 
     //输出路径
-    void ouputPath(int num,QString signlePath);
+    void ouputPath(int num, QString signlePath);
 
     //输出open与close表
     void ouputTable(QTextBrowser text, vector<string> v);
