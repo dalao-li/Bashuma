@@ -86,7 +86,7 @@ void Game::updateState(State St)
                 if (n == -1)
                 {
                     //写入QT控件
-                    openTable.push_back(QString::fromStdString(newStr) + "不在open表中，加入");
+                    openTable.push_back(QString::number(openTable.size() + 1) + "  : " + QString::fromStdString(newStr) + "不在open表中，加入");
                     open.emplace_back(newStr, St.str, St.g + 1, disWeight(newStr));
                 }
                 //否则，若经过当前状态可以使路径更优
@@ -95,7 +95,7 @@ void Game::updateState(State St)
                     //将当前状态的节点设为交换后状态的父节点，并更新g值
                     open[n].setInitValue(St.str, St.g + 1);
                     //写入QT控件
-                    openTable.push_back(QString::fromStdString(newStr + "在open表中，g值更新为") + QString::number(St.g + 1));
+                    openTable.push_back(QString::number(openTable.size() + 1) + "  : " + QString::fromStdString(newStr + "在open表中，g值更新为") + QString::number(St.g + 1));
                 }
             }
             if (newStr == finalStr)
@@ -110,8 +110,8 @@ void Game::updateState(State St)
     open.erase(find(open.begin(), open.end(), St));
     close.push_back(St);
     //写入QT控件
-    openTable.push_back(QString::fromStdString(St.str + "被移除open表"));
-    closeTable.push_back(QString::fromStdString(St.str + "被加入close表"));
+    openTable.push_back(QString::number(openTable.size() + 1) + "  : " + QString::fromStdString(St.str + "被移除open表"));
+    closeTable.push_back(QString::number(closeTable.size() + 1) + "  : " + QString::fromStdString(St.str + "被加入close表"));
 }
 
 //给定一个字符串返回它在容器的下标

@@ -40,6 +40,7 @@ public:
     //输出open与close表
     void ouputTable(QTextBrowser text,vector <string> v);
 
+
 private slots:
     void on_strart_pushButton_clicked();
 

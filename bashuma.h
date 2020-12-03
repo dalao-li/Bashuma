@@ -8,7 +8,7 @@
 #include <vector>
 #include <QMainWindow>
 #include <QLineEdit>
-
+#include <QDebug>
 using namespace std;
 
 //状态类
@@ -61,16 +61,20 @@ public:
                        {-1, -1, 3, 7},
                        {-1, 4, 6, 8},
                        {-1, -1, 5, 7}};
-    Game(){}
+    Game() {}
     Game(string originStr, string finalStr);
 
     ~Game()
     {
+        qDebug() <<"open表的原始尺寸"<<open.size()<<endl;
+        qDebug() <<"open表的原始内存"<<open.capacity()<<endl;
         vector<State>().swap(open);
         vector<State>().swap(close);
         vector<State>().swap(path);
         vector<QString>().swap(openTable);
         vector<QString>().swap(closeTable);
+        qDebug() <<"open表的当前尺寸"<<open.size()<<endl;
+        qDebug() <<"open表的当前内存"<<open.capacity()<<endl;
     }
 
     bool isOdevity();

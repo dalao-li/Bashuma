@@ -169,6 +169,7 @@ void MainWindow::clearLineEdit(QLineEdit *a[9])
 //清空输入
 void MainWindow::on_clear_pushButton_clicked()
 {
+
     clearLineEdit(orign_line);
     clearLineEdit(end_line);
     ui->path_textBrowser->clear();
@@ -210,7 +211,7 @@ void MainWindow::on_creatPath_pushButton_clicked()
         on_clear_pushButton_clicked();
         return;
     }
-    qDebug() << game.open.size() << endl;
+    qDebug() << "open表的尺寸" << game.open.size() << endl;
     //开始计算八数码
     game.start();
     QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.pathLength) + "步");
