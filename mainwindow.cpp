@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <cstdlib>
 #include <ctime>
+#include <QTime>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -65,7 +66,7 @@ bool MainWindow::judegInput(QLineEdit *a[9])
     }
 }
 
-//设置默认输入
+//设置九宫格默认输入
 void MainWindow::setLineEdit(QString str, QLineEdit *a[9])
 {
     for (int i = 0; i < 9; i++)
@@ -97,6 +98,19 @@ void MainWindow::ouputPath(QString signlePath)
     ui->path_textBrowser->insertPlainText(signlePath + "\n");
 }
 
+//延时函数
+void wait(int times)
+{
+    //等待时间流逝1秒钟
+    QTime time;
+    time.start();
+    while (time.elapsed() < times)
+    {
+        //处理事件
+        QCoreApplication::processEvents();
+    }
+}
+
 //开始完全输出八数码
 void MainWindow::on_strart_pushButton_clicked()
 {
@@ -104,8 +118,9 @@ void MainWindow::on_strart_pushButton_clicked()
     for (int i = 0; i < game.path.size(); i++)
     {
         ouputPath(QString::fromStdString(game.path[i].str));
-        //Sleep(1000);
+        wait(1000);
     }
+    QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLength) + "步");
     ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLength) + "步");
 }
 
@@ -141,17 +156,11 @@ string randomStr()
 void MainWindow::on_random_pushButton_clicked()
 {
     srand((int)time(0));
-    string s1 = randomStr();
-    string s2 = randomStr();
-
-    QString str11 = QString::fromStdString(s1);
-    QString str22 = QString::fromStdString(s2);
+    str1 = QString::fromStdString(randomStr());
+    str2 = QString::fromStdString(randomStr());
     //先清除输入
     clearLineEdit(orign_line);
     clearLineEdit(end_line);
-    str1 = str11;
-    str2 = str22;
-
     setLineEdit(str1, orign_line);
     setLineEdit(str2, end_line);
 }
@@ -169,7 +178,7 @@ void MainWindow::clearLineEdit(QLineEdit *a[9])
 //清空输入
 void MainWindow::on_clear_pushButton_clicked()
 {
-
+    game.clear();
     clearLineEdit(orign_line);
     clearLineEdit(end_line);
     ui->path_textBrowser->clear();
@@ -211,7 +220,6 @@ void MainWindow::on_creatPath_pushButton_clicked()
         on_clear_pushButton_clicked();
         return;
     }
-    qDebug() << "open表的尺寸" << game.open.size() << endl;
     //开始计算八数码
     game.start();
     QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.pathLength) + "步");
