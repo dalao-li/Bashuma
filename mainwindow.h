@@ -52,6 +52,8 @@ private slots:
 
     void on_creatPath_pushButton_clicked();
 
+    void on_horizontalSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     QLineEdit *orign_line[9], *end_line[9];

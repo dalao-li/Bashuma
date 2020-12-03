@@ -37,6 +37,15 @@ MainWindow::MainWindow(QWidget *parent)
     end_line[6] = ui->end_lineEdit_6;
     end_line[7] = ui->end_lineEdit_7;
     end_line[8] = ui->end_lineEdit_8;
+
+    //默认速度
+    ui->label_7->setText(QString::number(ui->horizontalSlider->value()));
+    //计算路径,自动执行，单步执行，清空按钮禁用
+    ui->creatPath_pushButton->setDisabled(true);
+    ui->strart_pushButton->setDisabled(true);
+    ui->sigleStep_pushButton->setDisabled(true);
+    ui->clear_pushButton->setDisabled(true);
+    ui->horizontalSlider->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -62,78 +71,6 @@ void MainWindow::setLineEdit(QString str, QLineEdit *a[9])
         // }
     }
 }
-
-//获取输入的字符串
-QString MainWindow::getString(QLineEdit *a[9])
-{
-    QString str = "";
-    for (int i = 0; i < 9; i++)
-    {
-        str += a[i]->text();
-    }
-    //qDebug() << str << endl;
-    return str;
-}
-
-//输出单步路径，参数为当前的步数和当前状态
-void MainWindow::ouputPath(int num, QString signlePath)
-{
-    //清除起始路径
-    clearLineEdit(orign_line);
-    //重新设置起始路径
-    setLineEdit(signlePath, orign_line);
-    ui->path_textBrowser->insertPlainText("第" + QString::number(num) + "步 : " + signlePath + "\n");
-}
-
-//延时函数
-void wait(int times)
-{
-    //等待时间流逝1秒钟
-    QTime time;
-    time.start();
-    while (time.elapsed() < times)
-    {
-        //处理事件
-        QCoreApplication::processEvents();
-    }
-}
-
-//自动输出八数码求解路径
-void MainWindow::on_strart_pushButton_clicked()
-{
-    //异常判断
-    if (game.pathLength == 0)
-    {
-        QMessageBox::warning(NULL, "警告", "请先生成路径");
-        return;
-    }
-
-    ui->path_textBrowser->clear();
-    //禁用单步执行按钮
-    ui->sigleStep_pushButton->setDisabled(true);
-    //禁用清空按钮
-    ui->clear_pushButton->setDisabled(true);
-    //禁用生成状态和计算路径按钮
-    ui->creatPath_pushButton->setDisabled(true);
-    ui->random_pushButton->setDisabled(true);
-
-    for (int i = 0; i < game.path.size(); i++)
-    {
-        ouputPath(i + 1, QString::fromStdString(game.path[i].str));
-        wait(1000);
-    }
-    QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLength) + "步");
-    //ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLength) + "步");
-
-    //恢复单步执行按钮
-    ui->sigleStep_pushButton->setEnabled(true);
-    //恢复清空按钮
-    ui->clear_pushButton->setEnabled(true);
-    //恢复生成状态和计算路径按钮
-    ui->creatPath_pushButton->setEnabled(true);
-    ui->random_pushButton->setEnabled(true);
-}
-
 string randomStr()
 {
     string s = "";
@@ -162,38 +99,75 @@ string randomStr()
     return s;
 }
 
-//随机生成八数码
-void MainWindow::on_random_pushButton_clicked()
+//延时函数
+void wait(int times)
 {
-    srand((int)time(0));
-    str1 = QString::fromStdString(randomStr());
-    str2 = QString::fromStdString(randomStr());
-    //先清除输入
-    clearLineEdit(orign_line);
-    clearLineEdit(end_line);
-    setLineEdit(str1, orign_line);
-    setLineEdit(str2, end_line);
-}
-
-//清除输入的值
-void MainWindow::clearLineEdit(QLineEdit *a[9])
-{
-    //先清除输入
-    for (int i = 0; i < 9; i++)
+    //等待时间流逝1秒钟
+    QTime time;
+    time.start();
+    while (time.elapsed() < times)
     {
-        a[i]->clear();
+        //处理事件
+        QCoreApplication::processEvents();
     }
 }
 
-//清空输入
-void MainWindow::on_clear_pushButton_clicked()
+//获取输入的字符串
+QString MainWindow::getString(QLineEdit *a[9])
 {
-    game.clear();
+    QString str = "";
+    for (int i = 0; i < 9; i++)
+    {
+        str += a[i]->text();
+    }
+    //qDebug() << str << endl;
+    return str;
+}
+
+//输出单步路径，参数为当前的步数和当前状态
+void MainWindow::ouputPath(int num, QString signlePath)
+{
+    //清除起始路径
     clearLineEdit(orign_line);
-    clearLineEdit(end_line);
+    //重新设置起始路径
+    setLineEdit(signlePath, orign_line);
+    QString s = QString("第%0步,共%1步:%2\n").arg(QString::number(num)).arg(QString::number(game.pathLength)).arg(signlePath);
+    ui->path_textBrowser->insertPlainText(s);
+}
+
+//自动输出八数码求解路径
+void MainWindow::on_strart_pushButton_clicked()
+{
+    //异常判断
+    if (game.pathLength == 0)
+    {
+        QMessageBox::warning(NULL, "警告", "请先生成路径");
+        return;
+    }
+
     ui->path_textBrowser->clear();
-    ui->open_textBrowser->clear();
-    ui->close_textBrowser->clear();
+    //禁用单步执行按钮
+    ui->sigleStep_pushButton->setDisabled(true);
+    //禁用清空按钮
+    ui->clear_pushButton->setDisabled(true);
+    //禁用生成状态和计算路径按钮
+    ui->creatPath_pushButton->setDisabled(true);
+    ui->random_pushButton->setDisabled(true);
+
+    for (int i = 0; i < game.path.size(); i++)
+    {
+        ouputPath(i + 1, QString::fromStdString(game.path[i].str));
+        int value = ui->horizontalSlider->value();
+
+        wait(20 * (100 - value));
+    }
+    QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLength) + "步");
+    //ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLength) + "步");
+
+    //恢复单步执行按钮
+    ui->sigleStep_pushButton->setEnabled(true);
+    //恢复清空按钮
+    ui->clear_pushButton->setEnabled(true);
 }
 
 //单步执行
@@ -219,7 +193,27 @@ void MainWindow::on_sigleStep_pushButton_clicked()
     reverse(game.path.begin(), game.path.end());
 }
 
-//生成路径
+//随机生成两个状态
+void MainWindow::on_random_pushButton_clicked()
+{
+    //解禁计算路径按钮
+    ui->creatPath_pushButton->setDisabled(false);
+    //禁用其他按钮
+    ui->strart_pushButton->setDisabled(true);
+    ui->sigleStep_pushButton->setDisabled(true);
+
+    srand((int)time(0));
+    str1 = QString::fromStdString(randomStr());
+    str2 = QString::fromStdString(randomStr());
+    //先清除输入
+    clearLineEdit(orign_line);
+    clearLineEdit(end_line);
+    //设置
+    setLineEdit(str1, orign_line);
+    setLineEdit(str2, end_line);
+}
+
+//计算路径
 void MainWindow::on_creatPath_pushButton_clicked()
 {
     str1 = getString(orign_line);
@@ -230,8 +224,16 @@ void MainWindow::on_creatPath_pushButton_clicked()
     {
         QMessageBox::warning(this, tr("警告"), tr("不可达请重新输入"));
         on_clear_pushButton_clicked();
+        //禁用计算路径,自动执行，单步执行，清空按钮
+        ui->creatPath_pushButton->setDisabled(true);
+        ui->strart_pushButton->setDisabled(true);
+        ui->sigleStep_pushButton->setDisabled(true);
+        ui->clear_pushButton->setDisabled(true);
         return;
     }
+    //禁用生成状态，计算路径按钮
+    ui->creatPath_pushButton->setDisabled(true);
+    ui->random_pushButton->setDisabled(true);
     //开始计算八数码
     game.start();
     QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.pathLength) + "步");
@@ -244,4 +246,49 @@ void MainWindow::on_creatPath_pushButton_clicked()
     {
         ui->close_textBrowser->insertPlainText(game.closeTable[i] + "\n\n");
     }
+    //解禁自动执行，单步执行，清空按钮
+    ui->strart_pushButton->setDisabled(false);
+    ui->sigleStep_pushButton->setDisabled(false);
+    ui->clear_pushButton->setDisabled(false);
+    //解禁调速按钮
+    ui->horizontalSlider->setDisabled(false);
+}
+
+//清除输入的值
+void MainWindow::clearLineEdit(QLineEdit *a[9])
+{
+    //先清除输入
+    for (int i = 0; i < 9; i++)
+    {
+        a[i]->clear();
+    }
+}
+
+//清空输入
+void MainWindow::on_clear_pushButton_clicked()
+{
+    //禁用自动执行，单步执行，清空
+    ui->creatPath_pushButton->setDisabled(true);
+    ui->strart_pushButton->setDisabled(true);
+    ui->sigleStep_pushButton->setDisabled(true);
+    ui->clear_pushButton->setDisabled(true);
+    //禁用调速按钮
+    ui->sigleStep_pushButton->setDisabled(true);
+    //恢复生成状态按钮
+    ui->random_pushButton->setDisabled(false);
+    game.clear();
+    clearLineEdit(orign_line);
+    clearLineEdit(end_line);
+    ui->path_textBrowser->clear();
+    ui->open_textBrowser->clear();
+    ui->close_textBrowser->clear();
+    //恢复默认速度
+    ui->horizontalSlider->setValue(50);
+}
+
+//显示速度
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    //connect(ui->label_7, SIGNAL(valueChanged(int)), ui->horizontalSlider, SLOT(setValue(int)));
+    ui->label_7->setText(QString::number(value));
 }
