@@ -272,18 +272,19 @@ void MainWindow::on_clear_pushButton_clicked()
     ui->strart_pushButton->setDisabled(true);
     ui->sigleStep_pushButton->setDisabled(true);
     ui->clear_pushButton->setDisabled(true);
-    //禁用调速按钮
     ui->sigleStep_pushButton->setDisabled(true);
     //恢复生成状态按钮
     ui->random_pushButton->setDisabled(false);
+    //禁用调速按钮
+    ui->horizontalSlider->setDisabled(true);
+    //恢复默认速度
+    ui->horizontalSlider->setValue(50);
     game.clear();
     clearLineEdit(orign_line);
     clearLineEdit(end_line);
     ui->path_textBrowser->clear();
     ui->open_textBrowser->clear();
     ui->close_textBrowser->clear();
-    //恢复默认速度
-    ui->horizontalSlider->setValue(50);
 }
 
 //显示速度
@@ -291,4 +292,9 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
     //connect(ui->label_7, SIGNAL(valueChanged(int)), ui->horizontalSlider, SLOT(setValue(int)));
     ui->label_7->setText(QString::number(value));
+}
+
+void MainWindow::on_path_textBrowser_sourceChanged(const QUrl &arg1)
+{
+    ui->path_textBrowser->moveCursor(QTextCursor::End);
 }

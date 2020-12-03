@@ -54,6 +54,8 @@ private slots:
 
     void on_horizontalSlider_valueChanged(int value);
 
+    void on_path_textBrowser_sourceChanged(const QUrl &arg1);
+
 private:
     Ui::MainWindow *ui;
     QLineEdit *orign_line[9], *end_line[9];

@@ -19,7 +19,7 @@
      <rect>
       <x>660</x>
       <y>100</y>
-      <width>471</width>
+      <width>511</width>
       <height>291</height>
      </rect>
     </property>
@@ -35,7 +35,7 @@
      <rect>
       <x>660</x>
       <y>480</y>
-      <width>471</width>
+      <width>511</width>
       <height>291</height>
      </rect>
     </property>
@@ -578,8 +578,8 @@
    <widget class="QSlider" name="horizontalSlider">
     <property name="geometry">
      <rect>
-      <x>820</x>
-      <y>820</y>
+      <x>740</x>
+      <y>800</y>
       <width>361</width>
       <height>81</height>
      </rect>
@@ -631,8 +631,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>740</x>
-      <y>840</y>
+      <x>660</x>
+      <y>820</y>
       <width>81</width>
       <height>41</height>
      </rect>
@@ -650,16 +650,6 @@
      <string>速度</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1204</width>
-     <height>25</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
