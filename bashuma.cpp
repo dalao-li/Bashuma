@@ -42,7 +42,7 @@ Game::Game(string os, string es) : os(std::move(os)),
                                    es(std::move(es)) {}
 
 //判断两个字符的奇偶性
-bool Game::isOdevity()
+bool Game::isOdevity(string os,string es)
 {
     int oss = 0, fss = 0;
     for (int i = 1; i < 9; ++i)
@@ -95,16 +95,17 @@ void Game::findState(State St)
                 {
                     //将当前状态的节点设为交换后状态的父节点，并更新g值
                     open[n].upState(St.str, St.g + 1);
+
                     //写入QT控件
                     openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(ns + "在open表中，g值更新为") + QString::number(St.g + 1));
                 }
             }
             if (ns == es)
             {
-                qDebug() << "ns" << QString::fromStdString(ns) << endl;
+                //qDebug() << "ns" << QString::fromStdString(ns) << endl;
                 qDebug() << "es" << QString::fromStdString(es) << endl;
                 flag = true;
-                printf("ok\n");
+                qDebug() << "ok" << endl;
                 return;
             }
         }
@@ -112,6 +113,7 @@ void Game::findState(State St)
     //将当前状态移出open表
     open.erase(find(open.begin(), open.end(), St));
     close.push_back(St);
+
     //写入QT控件
     openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(St.str + "被移除open表"));
     closeTable.push_back(QString::number(closeTable.size() + 1) + ":" + QString::fromStdString(St.str + "被加入close表"));
@@ -145,37 +147,22 @@ int Game::setWeight(string str)
     return sum;
 }
 
-//生成整个转移过程的路径
-void Game::findPath()
-{
-    vector<State> v;
-    v.insert(v.end(), open.begin(), open.end());
-    v.insert(v.end(), close.begin(), close.end());
-    State St = v[findStr(es, v)];
-    while (St.fs != " ")
-    {
-        path.push_back(St.str);
-        //找寻下一个节点
-        St = v[findStr(St.fs, v)];
-    }
-    path.emplace_back(os);
-    reverse(path.begin(), path.end());
-}
-
 void Game::start()
 {
-    if (!isOdevity())
+    if (!isOdevity(os,es))
     {
-        cout << "不可达" << endl;
+        //cout << "不可达" << endl;
         return;
     }
     //初始状态
     State St = State(os, " ", 0, 0);
     open.push_back(St);
+    //qDebug() << "开始寻找"<<endl;
     findState(St);
     //当open表不为空时
     while (!open.empty())
     {
+        //qDebug() << "寻找"<<endl;
         if (flag)
         {
             break;
@@ -184,6 +171,34 @@ void Game::start()
         sort(open.begin(), open.end());
         findState(open[open.size() - 1]);
     }
+    qDebug() << "寻找完毕" << endl;
     findPath();
+    qDebug() << "路径建立完毕" << endl;
+    qDebug() << "=====================" << endl;
     pathLen = path.size();
+}
+
+//生成整个转移过程的路径
+void Game::findPath()
+{
+    qDebug() << "开始生成路径" << endl;
+    vector<State> v;
+    v.insert(v.end(), open.begin(), open.end());
+    v.insert(v.end(), close.begin(), close.end());
+
+    //结束节点状态
+    int t = findStr(es, v);
+
+    qDebug() << "t = " << t << endl;
+    State St = v[t];
+    while (St.fs != " ")
+    {
+        path.push_back(St.str);
+        //找寻下一个节点
+        St = v[findStr(St.fs, v)];
+    }
+    //加入起始节点
+    path.emplace_back(os);
+    reverse(path.begin(), path.end());
+    vector<State>().swap(v);
 }

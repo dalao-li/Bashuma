@@ -36,7 +36,7 @@ public:
     QString getString(QLineEdit *a[9]);
 
     //输出路径
-    void ouputPath(int num, QString signlePath);
+    void ouputPath(int num, QString nowPath);
 
     //输出open与close表
     void ouputTable(QTextBrowser text, vector<string> v);

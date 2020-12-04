@@ -118,13 +118,13 @@ QString MainWindow::getString(QLineEdit *a[9])
 }
 
 //输出单步路径，参数为当前的步数和当前状态
-void MainWindow::ouputPath(int num, QString signlePath)
+void MainWindow::ouputPath(int num, QString nowPath)
 {
     //清除起始路径
     clearLineEdit(orign_line);
     //重新设置起始路径
-    setLineEdit(signlePath, orign_line);
-    QString s = QString("第%0步,共%1步:%2\n").arg(QString::number(num)).arg(QString::number(game.pathLen)).arg(signlePath);
+    setLineEdit(nowPath, orign_line);
+    QString s = QString("第%0步,共%1步:%2\n").arg(QString::number(num)).arg(QString::number(game.pathLen)).arg(nowPath);
     ui->path_textBrowser->insertPlainText(s);
 }
 
@@ -196,8 +196,18 @@ void MainWindow::on_random_pushButton_clicked()
     ui->sigleStep_pushButton->setDisabled(true);
 
     srand((int)time(0));
-    str1 = QString::fromStdString(randomStr());
-    str2 = QString::fromStdString(randomStr());
+    string s1 = "";
+    string s2 = "";
+    while(1){
+        s1 = randomStr();
+        s2 = randomStr();
+        if(game.isOdevity(s1,s2)){
+            break;
+        }
+    }
+
+    str1 = QString::fromStdString(s1);
+    str2 = QString::fromStdString(s2);
     //先清除输入
     clearLineEdit(orign_line);
     clearLineEdit(end_line);
@@ -213,7 +223,7 @@ void MainWindow::on_creatPath_pushButton_clicked()
     str2 = getString(end_line);
     //给状态f赋值
     game = Game(str1.toStdString(), str2.toStdString());
-    if (!game.isOdevity())
+    if (!game.isOdevity(str1.toStdString(), str2.toStdString()))
     {
         QMessageBox::warning(this, tr("警告"), tr("不可达请重新输入"));
         on_clear_pushButton_clicked();
@@ -231,11 +241,11 @@ void MainWindow::on_creatPath_pushButton_clicked()
     game.start();
     QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.pathLen) + "步");
     //输出open与close表
-    for (int i = 0; i < game.openTable.size(); i++)
+    for (int i = 0, size = game.openTable.size(); i < size; i++)
     {
         ui->open_textBrowser->insertPlainText(game.openTable[i] + "\n\n");
     }
-    for (int i = 0; i < game.closeTable.size(); i++)
+    for (int i = 0, size = game.closeTable.size(); i < size; i++)
     {
         ui->close_textBrowser->insertPlainText(game.closeTable[i] + "\n\n");
     }
@@ -255,6 +265,7 @@ void MainWindow::clearLineEdit(QLineEdit *a[9])
     {
         a[i]->clear();
     }
+
 }
 
 //清空输入
@@ -277,6 +288,9 @@ void MainWindow::on_clear_pushButton_clicked()
     ui->path_textBrowser->clear();
     ui->open_textBrowser->clear();
     ui->close_textBrowser->clear();
+    //vector<State>().swap(game.open);
+    //vector<State>().swap(game.close);
+    //vector<string>().swap(game.path);
 }
 
 //显示速度

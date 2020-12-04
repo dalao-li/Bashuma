@@ -42,7 +42,6 @@ public:
     vector<State> open;
     vector<State> close;
     vector<string> path;
-
     vector<QString> openTable;
     vector<QString> closeTable;
     //路径长度
@@ -64,7 +63,7 @@ public:
     Game() {}
     Game(string os, string es);
     ~Game() {}
-    bool isOdevity();
+    bool isOdevity(string os,string es);
 
     //更新当前状态
     void findState(State St);
