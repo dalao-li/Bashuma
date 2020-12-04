@@ -61,16 +61,9 @@ void MainWindow::setLineEdit(QString str, QLineEdit *a[9])
         //截取一个字符
         QString s = str.mid(i, 1);
         a[i]->setText(s);
-        // int n = atoi(s.toStdString().c_str());
-        // if (n == 0)
-        // {
-        //     //0背景设为红色
-        //     QPalette palette = a[i]->palette();
-        //     palette.setColor(QPalette::Normal, QPalette::PlaceholderText, Qt::red);
-        //     a[i]->setPalette(palette);
-        // }
     }
 }
+
 string randomStr()
 {
     string s = "";
@@ -131,7 +124,7 @@ void MainWindow::ouputPath(int num, QString signlePath)
     clearLineEdit(orign_line);
     //重新设置起始路径
     setLineEdit(signlePath, orign_line);
-    QString s = QString("第%0步,共%1步:%2\n").arg(QString::number(num)).arg(QString::number(game.pathLength)).arg(signlePath);
+    QString s = QString("第%0步,共%1步:%2\n").arg(QString::number(num)).arg(QString::number(game.pathLen)).arg(signlePath);
     ui->path_textBrowser->insertPlainText(s);
 }
 
@@ -139,7 +132,7 @@ void MainWindow::ouputPath(int num, QString signlePath)
 void MainWindow::on_strart_pushButton_clicked()
 {
     //异常判断
-    if (game.pathLength == 0)
+    if (game.pathLen == 0)
     {
         QMessageBox::warning(NULL, "警告", "请先生成路径");
         return;
@@ -156,13 +149,13 @@ void MainWindow::on_strart_pushButton_clicked()
 
     for (int i = 0; i < game.path.size(); i++)
     {
-        ouputPath(i + 1, QString::fromStdString(game.path[i].str));
-        int value = ui->horizontalSlider->value();
-
-        wait(20 * (100 - value));
+        ouputPath(i + 1, QString::fromStdString(game.path[i]));
+        //延时
+        int time = 20 * (100 - ui->horizontalSlider->value());
+        wait(time);
     }
-    QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLength) + "步");
-    //ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLength) + "步");
+    QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLen) + "步");
+    //ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLen) + "步");
 
     //恢复单步执行按钮
     ui->sigleStep_pushButton->setEnabled(true);
@@ -174,17 +167,17 @@ void MainWindow::on_strart_pushButton_clicked()
 void MainWindow::on_sigleStep_pushButton_clicked()
 {
     //异常判断
-    if (game.pathLength == 0)
+    if (game.pathLen == 0)
     {
         QMessageBox::warning(NULL, "警告", "请先生成路径");
         return;
     }
-    int num = game.pathLength - game.path.size();
-    ouputPath(num, QString::fromStdString(game.path[0].str));
-    if (game.path.size() == 0)
+    int num = game.pathLen - game.path.size();
+    ouputPath(num, QString::fromStdString(game.path[0]));
+    if (game.path.empty())
     {
         QMessageBox::warning(this, tr("警告"), tr("已到达"));
-        ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLength) + "步");
+        ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLen) + "步");
         return;
     }
     //删除路径中的首元素
@@ -236,7 +229,7 @@ void MainWindow::on_creatPath_pushButton_clicked()
     ui->random_pushButton->setDisabled(true);
     //开始计算八数码
     game.start();
-    QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.pathLength) + "步");
+    QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.pathLen) + "步");
     //输出open与close表
     for (int i = 0; i < game.openTable.size(); i++)
     {
@@ -279,7 +272,6 @@ void MainWindow::on_clear_pushButton_clicked()
     ui->horizontalSlider->setDisabled(true);
     //恢复默认速度
     ui->horizontalSlider->setValue(50);
-    game.clear();
     clearLineEdit(orign_line);
     clearLineEdit(end_line);
     ui->path_textBrowser->clear();
@@ -294,6 +286,7 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
     ui->label_7->setText(QString::number(value));
 }
 
+//文本框滚动
 void MainWindow::on_path_textBrowser_sourceChanged(const QUrl &arg1)
 {
     ui->path_textBrowser->moveCursor(QTextCursor::End);
