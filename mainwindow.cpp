@@ -12,10 +12,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowOpacity(0.95);
     // 禁止最大化按钮
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     // 设置拖动窗口大小，这样的操作会使页面无法最大化
-    setFixedSize(1200, 1000);
+    //x,y 宽，长
+    setFixedSize(960, 825);
 
     //将组件替换为数组以bian一会操作
     orign_line[0] = ui->origin_lineEdit_0;
@@ -52,6 +54,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 
 //设置九宫格默认输入
 void MainWindow::setLineEdit(QString str, QLineEdit *a[9])
@@ -219,6 +223,9 @@ void MainWindow::on_random_pushButton_clicked()
 //计算路径
 void MainWindow::on_creatPath_pushButton_clicked()
 {
+    //清空openTable和closeTable表
+    //vector<QString>().swap(game.openTable);
+    //vector<QString>().swap(game.closeTable);
     str1 = getString(orign_line);
     str2 = getString(end_line);
     //给状态f赋值

@@ -117,6 +117,8 @@ void Game::findState(State St)
     //写入QT控件
     openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(St.str + "被移除open表"));
     closeTable.push_back(QString::number(closeTable.size() + 1) + ":" + QString::fromStdString(St.str + "被加入close表"));
+    //qDebug() << "open尺寸" <<open.size()<< endl;
+    //qDebug() << "close尺寸" <<open.size()<< endl;
 }
 
 //给定一个字符串返回它在容器的下标
@@ -159,7 +161,6 @@ void Game::start()
     open.push_back(St);
     //qDebug() << "开始寻找"<<endl;
     findState(St);
-    //当open表不为空时
     while (!open.empty())
     {
         //qDebug() << "寻找"<<endl;
@@ -201,4 +202,6 @@ void Game::findPath()
     path.emplace_back(os);
     reverse(path.begin(), path.end());
     vector<State>().swap(v);
+    vector<State>().swap(open);
+    vector<State>().swap(close);
 }
