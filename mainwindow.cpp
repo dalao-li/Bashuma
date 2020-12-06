@@ -12,7 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowOpacity(0.95);
+    //窗口透明度
+    setWindowOpacity(0.99);
     // 禁止最大化按钮
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     // 设置拖动窗口大小，这样的操作会使页面无法最大化

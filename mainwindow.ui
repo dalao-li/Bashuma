@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">border-radius:5px;
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTextBrowser" name="open_textBrowser">
     <property name="geometry">
@@ -25,7 +29,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -41,7 +45,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -57,7 +61,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>16</pointsize>
      </font>
     </property>
@@ -73,8 +77,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -92,8 +98,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -111,8 +119,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -130,8 +140,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -149,8 +161,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -168,8 +182,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -187,8 +203,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -206,8 +224,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -225,8 +245,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -244,8 +266,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -263,8 +287,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -282,8 +308,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -301,8 +329,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -320,8 +350,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -339,8 +371,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -358,8 +392,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -377,8 +413,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -396,8 +434,10 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>26</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="readOnly">
@@ -415,7 +455,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -434,7 +474,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -445,7 +485,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>660</x>
       <y>10</y>
       <width>131</width>
       <height>31</height>
@@ -453,7 +493,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -472,7 +512,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -483,7 +523,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>160</x>
       <y>300</y>
       <width>141</width>
       <height>61</height>
@@ -491,7 +531,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>20</pointsize>
      </font>
     </property>
@@ -510,14 +550,16 @@
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
-      <pointsize>14</pointsize>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 10px;  
-background-color: rgb(197, 197, 197);
-border: 2px groove gray;
+background-color: rgb(170, 255, 0);
+border: 2px groove rgb(170, 255, 0);
 border-style: outset;</string>
     </property>
     <property name="text">
@@ -535,15 +577,18 @@ border-style: outset;</string>
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
-      <pointsize>14</pointsize>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 10px;  
-background-color: rgb(197, 197, 197);
+
 selection-background-color: rgb(71, 71, 71);
-border: 2px groove gray;
+background-color: rgb(0, 170, 255);
+border: 2px groove rgb(0, 170, 255);
 border-style: outset;</string>
     </property>
     <property name="text">
@@ -561,14 +606,16 @@ border-style: outset;</string>
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
-      <pointsize>14</pointsize>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 10px;  
-background-color: rgb(197, 197, 197);
-border: 2px groove gray;
+background-color: rgb(199, 199, 199);
+border: 2px groove rgb(199, 199, 199);
 border-style: outset;</string>
     </property>
     <property name="text">
@@ -586,14 +633,16 @@ border-style: outset;</string>
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
-      <pointsize>14</pointsize>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 10px;  
-background-color: rgb(197, 197, 197);
-border: 2px groove gray;
+background-color: yellow;
+border: 2px groove yellow;
 border-style: outset;</string>
     </property>
     <property name="text">
@@ -603,15 +652,15 @@ border-style: outset;</string>
    <widget class="QSlider" name="horizontalSlider">
     <property name="geometry">
      <rect>
-      <x>690</x>
-      <y>700</y>
+      <x>670</x>
+      <y>710</y>
       <width>211</width>
       <height>61</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
       <pointsize>14</pointsize>
      </font>
     </property>
@@ -645,14 +694,16 @@ border-style: outset;</string>
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
-      <pointsize>14</pointsize>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 10px;  
-background-color: rgb(197, 197, 197);
-border: 2px groove gray;
+background-color: rgb(255, 85, 127);
+border: 2px groove rgb(255, 85, 127);
 border-style: outset;</string>
     </property>
     <property name="text">
@@ -662,15 +713,37 @@ border-style: outset;</string>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>710</y>
+      <x>580</x>
+      <y>700</y>
       <width>81</width>
-      <height>41</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Consolas</family>
+      <family>微软雅黑</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="text">
+     <string>速度</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>700</y>
+      <width>81</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
       <pointsize>20</pointsize>
      </font>
     </property>
