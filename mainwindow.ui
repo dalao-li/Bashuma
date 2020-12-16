@@ -539,10 +539,10 @@
      <string>Path输出</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="strart_pushButton">
+   <widget class="QPushButton" name="autoOuputBtn">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>320</x>
       <y>690</y>
       <width>141</width>
       <height>51</height>
@@ -566,7 +566,7 @@ border-style: outset;</string>
      <string>自动执行</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="random_pushButton">
+   <widget class="QPushButton" name="autoInputBtn">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -592,14 +592,14 @@ border: 2px groove rgb(0, 170, 255);
 border-style: outset;</string>
     </property>
     <property name="text">
-     <string>生成状态</string>
+     <string>自动生成</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="clear_pushButton">
+   <widget class="QPushButton" name="clearBtn">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>690</y>
+      <x>170</x>
+      <y>750</y>
       <width>141</width>
       <height>51</height>
      </rect>
@@ -622,10 +622,10 @@ border-style: outset;</string>
      <string>清空</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="sigleStep_pushButton">
+   <widget class="QPushButton" name="manuOuputBtn">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>320</x>
       <y>750</y>
       <width>141</width>
       <height>51</height>
@@ -683,11 +683,11 @@ border-style: outset;</string>
      <number>2</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="creatPath_pushButton">
+   <widget class="QPushButton" name="findPathBtn">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>750</y>
+      <x>170</x>
+      <y>690</y>
       <width>141</width>
       <height>51</height>
      </rect>
@@ -752,6 +752,35 @@ border-style: outset;</string>
     </property>
     <property name="text">
      <string>速度</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="manuInputBtn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>750</y>
+      <width>141</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;  
+
+selection-background-color: rgb(255, 85, 255);
+background-color: rgb(255, 85, 255);
+border: 2px groove rgb(255, 85, 255);
+border-style: outset;</string>
+    </property>
+    <property name="text">
+     <string>手动输入</string>
     </property>
    </widget>
   </widget>

@@ -25,11 +25,6 @@ public:
 
     Game game;
 
-    void set(){
-        game.os = str1.toStdString();
-        game.es = str2.toStdString();
-    }
-
     QString str1, str2;
 
     //清除输入
@@ -48,19 +43,21 @@ public:
     void ouputTable(QTextBrowser text, vector<string> v);
 
 private slots:
-    void on_strart_pushButton_clicked();
+    void on_autoOuputBtn_clicked();
 
-    void on_random_pushButton_clicked();
+    void on_autoInputBtn_clicked();
 
-    void on_clear_pushButton_clicked();
+    void on_clearBtn_clicked();
 
-    void on_sigleStep_pushButton_clicked();
+    void on_manuOuputBtn_clicked();
 
-    void on_creatPath_pushButton_clicked();
+    void on_findPathBtn_clicked();
 
     void on_horizontalSlider_valueChanged(int value);
 
     void on_path_textBrowser_sourceChanged(const QUrl &arg1);
+
+    void on_manuInputBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

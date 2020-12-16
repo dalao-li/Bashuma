@@ -41,6 +41,8 @@ public:
     string os;
     //八数码最终状态
     string es;
+    //标志量
+    bool flag;
     vector<State> open;
     vector<State> close;
     vector<string> path;

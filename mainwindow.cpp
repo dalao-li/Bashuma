@@ -44,10 +44,10 @@ MainWindow::MainWindow(QWidget *parent)
     //默认速度
     ui->label_7->setText(QString::number(ui->horizontalSlider->value()));
     //计算路径,自动执行，单步执行，清空按钮禁用
-    ui->creatPath_pushButton->setDisabled(true);
-    ui->strart_pushButton->setDisabled(true);
-    ui->sigleStep_pushButton->setDisabled(true);
-    ui->clear_pushButton->setDisabled(true);
+    ui->findPathBtn->setDisabled(true);
+    ui->autoOuputBtn->setDisabled(true);
+    ui->manuOuputBtn->setDisabled(true);
+    ui->clearBtn->setDisabled(true);
     ui->horizontalSlider->setDisabled(true);
 }
 
@@ -55,8 +55,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
 
 //设置九宫格默认输入
 void MainWindow::setLineEdit(QString str, QLineEdit *a[9])
@@ -134,7 +132,7 @@ void MainWindow::ouputPath(int num, QString nowPath)
 }
 
 //自动输出八数码求解路径
-void MainWindow::on_strart_pushButton_clicked()
+void MainWindow::on_autoOuputBtn_clicked()
 {
     //异常判断
     if (game.pathLen == 0)
@@ -145,12 +143,12 @@ void MainWindow::on_strart_pushButton_clicked()
 
     ui->path_textBrowser->clear();
     //禁用单步执行按钮
-    ui->sigleStep_pushButton->setDisabled(true);
+    ui->manuOuputBtn->setDisabled(true);
     //禁用清空按钮
-    ui->clear_pushButton->setDisabled(true);
+    ui->clearBtn->setDisabled(true);
     //禁用生成状态和计算路径按钮
-    ui->creatPath_pushButton->setDisabled(true);
-    ui->random_pushButton->setDisabled(true);
+    ui->findPathBtn->setDisabled(true);
+    ui->autoInputBtn->setDisabled(true);
 
     for (int i = 0; i < game.path.size(); i++)
     {
@@ -162,13 +160,13 @@ void MainWindow::on_strart_pushButton_clicked()
     QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLen) + "步");
 
     //恢复单步执行按钮
-    ui->sigleStep_pushButton->setEnabled(true);
+    ui->manuOuputBtn->setEnabled(true);
     //恢复清空按钮
-    ui->clear_pushButton->setEnabled(true);
+    ui->clearBtn->setEnabled(true);
 }
 
 //单步执行
-void MainWindow::on_sigleStep_pushButton_clicked()
+void MainWindow::on_manuOuputBtn_clicked()
 {
     //异常判断
     if (game.pathLen == 0)
@@ -190,22 +188,24 @@ void MainWindow::on_sigleStep_pushButton_clicked()
     reverse(game.path.begin(), game.path.end());
 }
 
-//随机生成两个状态
-void MainWindow::on_random_pushButton_clicked()
+//自动随机生成两个状态
+void MainWindow::on_autoInputBtn_clicked()
 {
     //解禁计算路径按钮
-    ui->creatPath_pushButton->setDisabled(false);
+    ui->findPathBtn->setDisabled(false);
     //禁用其他按钮
-    ui->strart_pushButton->setDisabled(true);
-    ui->sigleStep_pushButton->setDisabled(true);
+    ui->autoOuputBtn->setDisabled(true);
+    ui->manuOuputBtn->setDisabled(true);
 
     srand((int)time(0));
     string s1 = "";
     string s2 = "";
-    while(1){
+    while (1)
+    {
         s1 = randomStr();
         s2 = randomStr();
-        if(game.isOdevity(s1,s2)){
+        if (game.isOdevity(s1, s2))
+        {
             break;
         }
     }
@@ -220,30 +220,31 @@ void MainWindow::on_random_pushButton_clicked()
 }
 
 //计算路径
-void MainWindow::on_creatPath_pushButton_clicked()
+void MainWindow::on_findPathBtn_clicked()
 {
     //清空openTable和closeTable表
     str1 = getString(orign_line);
     str2 = getString(end_line);
     //给状态f赋值
-    set();
+    game.os = str1.toStdString();
+    game.es = str2.toStdString();
     if (!game.isOdevity(str1.toStdString(), str2.toStdString()))
     {
         QMessageBox::warning(this, tr("警告"), tr("不可达请重新输入"));
-        on_clear_pushButton_clicked();
+        on_clearBtn_clicked();
         //禁用计算路径,自动执行，单步执行，清空按钮
-        ui->creatPath_pushButton->setDisabled(true);
-        ui->strart_pushButton->setDisabled(true);
-        ui->sigleStep_pushButton->setDisabled(true);
-        ui->clear_pushButton->setDisabled(true);
+        ui->findPathBtn->setDisabled(true);
+        ui->autoOuputBtn->setDisabled(true);
+        ui->manuOuputBtn->setDisabled(true);
+        ui->clearBtn->setDisabled(true);
         return;
     }
     //禁用生成状态，计算路径按钮
-    ui->creatPath_pushButton->setDisabled(true);
-    ui->random_pushButton->setDisabled(true);
+    ui->findPathBtn->setDisabled(true);
+    ui->autoInputBtn->setDisabled(true);
+    ui->manuInputBtn->setDisabled(true);
     //开始计算八数码
     game.start();
-
 
     QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.pathLen) + "步");
     //输出open与close表
@@ -256,9 +257,9 @@ void MainWindow::on_creatPath_pushButton_clicked()
         ui->close_textBrowser->insertPlainText(game.closeTable[i] + "\n\n");
     }
     //解禁自动执行，单步执行，清空按钮
-    ui->strart_pushButton->setDisabled(false);
-    ui->sigleStep_pushButton->setDisabled(false);
-    ui->clear_pushButton->setDisabled(false);
+    ui->autoOuputBtn->setDisabled(false);
+    ui->manuOuputBtn->setDisabled(false);
+    ui->clearBtn->setDisabled(false);
     //解禁调速按钮
     ui->horizontalSlider->setDisabled(false);
 }
@@ -271,22 +272,23 @@ void MainWindow::clearLineEdit(QLineEdit *a[9])
     {
         a[i]->clear();
     }
-
 }
 
 //清空输入
-void MainWindow::on_clear_pushButton_clicked()
+void MainWindow::on_clearBtn_clicked()
 {
     //禁用自动执行，单步执行，清空
-    ui->creatPath_pushButton->setDisabled(true);
-    ui->strart_pushButton->setDisabled(true);
-    ui->sigleStep_pushButton->setDisabled(true);
-    ui->clear_pushButton->setDisabled(true);
-    ui->sigleStep_pushButton->setDisabled(true);
-    //恢复生成状态按钮
-    ui->random_pushButton->setDisabled(false);
+    ui->findPathBtn->setDisabled(true);
+    ui->autoOuputBtn->setDisabled(true);
+    ui->manuOuputBtn->setDisabled(true);
+    ui->clearBtn->setDisabled(true);
+    ui->manuOuputBtn->setDisabled(true);
     //禁用调速按钮
     ui->horizontalSlider->setDisabled(true);
+
+    //恢复生成状态按钮
+    ui->autoInputBtn->setDisabled(false);
+    ui->manuInputBtn->setDisabled(false);
     //恢复默认速度
     ui->horizontalSlider->setValue(50);
     clearLineEdit(orign_line);
@@ -294,10 +296,10 @@ void MainWindow::on_clear_pushButton_clicked()
     ui->path_textBrowser->clear();
     ui->open_textBrowser->clear();
     ui->close_textBrowser->clear();
-    //game = Game();
-    //vector<State>().swap(game.open);
-    //vector<State>().swap(game.close);
-    //vector<string>().swap(game.path);
+    //解除占用
+    vector<State>().swap(game.open);
+    vector<State>().swap(game.close);
+    vector<string>().swap(game.path);
 }
 
 //显示速度
@@ -310,4 +312,9 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
 void MainWindow::on_path_textBrowser_sourceChanged(const QUrl &arg1)
 {
     ui->path_textBrowser->moveCursor(QTextCursor::End);
+}
+
+//手动输入
+void MainWindow::on_manuInputBtn_clicked()
+{
 }
