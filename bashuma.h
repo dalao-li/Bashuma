@@ -20,7 +20,7 @@ public:
     //父节点
     string fs;
     int f, g, h;
-    State(){}
+    State() {}
     State(string str, string fs, int g, int h);
 
     //更新父节点与g值
@@ -29,7 +29,6 @@ public:
     bool operator<(const State &s1) const;
 
     bool operator==(const State &s1) const;
-
 
 } State;
 
@@ -66,13 +65,11 @@ public:
                       {-1, -1, 5, 7}};
     Game() {}
     Game(string os, string es);
-    ~Game() {
-        qDebug()<<"析构"<<endl;
-        vector<State>().swap(open);
-        vector<State>().swap(close);
-        vector<string>().swap(path);
+    ~Game()
+    {
+        //qDebug() << "析构" << endl;
     }
-    bool isOdevity(string os,string es);
+    bool isOdevity(string os, string es);
 
     //更新当前状态
     void findState(State St);

@@ -169,10 +169,10 @@ void Game::start()
         sort(open.begin(), open.end());
         findState(open[open.size() - 1]);
     }
-    qDebug() << "寻找完毕" << endl;
+    //qDebug() << "寻找完毕" << endl;
     findPath();
-    qDebug() << "路径建立完毕" << endl;
-    qDebug() << "=====================" << endl;
+    //qDebug() << "路径建立完毕" << endl;
+    //qDebug() << "=====================" << endl;
     pathLen = path.size();
 }
 
@@ -186,7 +186,7 @@ void Game::findPath()
     //结束节点状态的下标
     int t = findStr(es, v);
 
-    qDebug() << "t = " << t << endl;
+    //qDebug() << "t = " << t << endl;
     State St = v[t];
     while (St.fs != " ")
     {
@@ -197,6 +197,4 @@ void Game::findPath()
     //加入起始节点
     path.emplace_back(os);
     reverse(path.begin(), path.end());
-//    vector<State>().swap(v);
-//    vector<State>().swap(open);
 }

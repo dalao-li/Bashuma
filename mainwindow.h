@@ -28,16 +28,22 @@ public:
     QString str1, str2;
 
     //清除输入
-    void clearLineEdit(QLineEdit *a[9]);
+    void clearLines(QLineEdit *a[9]);
 
     //设置默认输入
-    void setLineEdit(QString str, QLineEdit *a[9]);
+    void setLines(QString str, QLineEdit *a[9]);
 
     //将九宫格输入转化为字符串
-    QString getString(QLineEdit *a[9]);
+    QString getLines(QLineEdit *a[9]);
+
+    //产生随机字符串
+    string randomStr();
+
+    //延时函数
+    void wait(int times);
 
     //输出路径
-    void ouputPath(int num, QString nowPath);
+    void displayPath(int num, QString nowPath);
 
     //输出open与close表
     void ouputTable(QTextBrowser text, vector<string> v);
@@ -55,14 +61,14 @@ private slots:
 
     void on_horizontalSlider_valueChanged(int value);
 
-    void on_path_textBrowser_sourceChanged(const QUrl &arg1);
+    void on_pathTextBrowser_sourceChanged(const QUrl &arg1);
 
     void on_manuInputBtn_clicked();
 
 private:
     Ui::MainWindow *ui;
 
-    QLineEdit *orign_line[9], *end_line[9];
+    QLineEdit *originLine[9], *endLine[9];
 };
 
 #endif // MAINWINDOW_H
