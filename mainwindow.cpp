@@ -160,7 +160,6 @@ void MainWindow::on_strart_pushButton_clicked()
         wait(time);
     }
     QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLen) + "步");
-    //ui->path_textBrowser->insertPlainText("共" + QString::number(game.pathLen) + "步");
 
     //恢复单步执行按钮
     ui->sigleStep_pushButton->setEnabled(true);
@@ -210,7 +209,6 @@ void MainWindow::on_random_pushButton_clicked()
             break;
         }
     }
-
     str1 = QString::fromStdString(s1);
     str2 = QString::fromStdString(s2);
     //先清除输入
@@ -225,12 +223,10 @@ void MainWindow::on_random_pushButton_clicked()
 void MainWindow::on_creatPath_pushButton_clicked()
 {
     //清空openTable和closeTable表
-    //vector<QString>().swap(game.openTable);
-    //vector<QString>().swap(game.closeTable);
     str1 = getString(orign_line);
     str2 = getString(end_line);
     //给状态f赋值
-    game = Game(str1.toStdString(), str2.toStdString());
+    set();
     if (!game.isOdevity(str1.toStdString(), str2.toStdString()))
     {
         QMessageBox::warning(this, tr("警告"), tr("不可达请重新输入"));
@@ -247,6 +243,8 @@ void MainWindow::on_creatPath_pushButton_clicked()
     ui->random_pushButton->setDisabled(true);
     //开始计算八数码
     game.start();
+
+
     QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.pathLen) + "步");
     //输出open与close表
     for (int i = 0, size = game.openTable.size(); i < size; i++)
@@ -296,6 +294,7 @@ void MainWindow::on_clear_pushButton_clicked()
     ui->path_textBrowser->clear();
     ui->open_textBrowser->clear();
     ui->close_textBrowser->clear();
+    //game = Game();
     //vector<State>().swap(game.open);
     //vector<State>().swap(game.close);
     //vector<string>().swap(game.path);
@@ -304,7 +303,6 @@ void MainWindow::on_clear_pushButton_clicked()
 //显示速度
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
-    //connect(ui->label_7, SIGNAL(valueChanged(int)), ui->horizontalSlider, SLOT(setValue(int)));
     ui->label_7->setText(QString::number(value));
 }
 

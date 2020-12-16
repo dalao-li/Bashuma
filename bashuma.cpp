@@ -42,7 +42,7 @@ Game::Game(string os, string es) : os(std::move(os)),
                                    es(std::move(es)) {}
 
 //判断两个字符的奇偶性
-bool Game::isOdevity(string os,string es)
+bool Game::isOdevity(string os, string es)
 {
     int oss = 0, fss = 0;
     for (int i = 1; i < 9; ++i)
@@ -102,10 +102,9 @@ void Game::findState(State St)
             }
             if (ns == es)
             {
-                //qDebug() << "ns" << QString::fromStdString(ns) << endl;
                 qDebug() << "es" << QString::fromStdString(es) << endl;
                 flag = true;
-                qDebug() << "ok" << endl;
+                //qDebug() << "ok" << endl;
                 return;
             }
         }
@@ -117,8 +116,6 @@ void Game::findState(State St)
     //写入QT控件
     openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(St.str + "被移除open表"));
     closeTable.push_back(QString::number(closeTable.size() + 1) + ":" + QString::fromStdString(St.str + "被加入close表"));
-    //qDebug() << "open尺寸" <<open.size()<< endl;
-    //qDebug() << "close尺寸" <<open.size()<< endl;
 }
 
 //给定一个字符串返回它在容器的下标
@@ -151,16 +148,16 @@ int Game::setWeight(string str)
 
 void Game::start()
 {
-    if (!isOdevity(os,es))
+    if (!isOdevity(os, es))
     {
         //cout << "不可达" << endl;
         return;
     }
-    //初始状态
-    State St = State(os, " ", 0, 0);
-    open.push_back(St);
+    //加入初始状态
+    open.emplace_back(os, " ", 0, 0);
     //qDebug() << "开始寻找"<<endl;
-    findState(St);
+    findState(open[0]);
+    flag = false;
     while (!open.empty())
     {
         //qDebug() << "寻找"<<endl;
@@ -186,8 +183,7 @@ void Game::findPath()
     vector<State> v;
     v.insert(v.end(), open.begin(), open.end());
     v.insert(v.end(), close.begin(), close.end());
-
-    //结束节点状态
+    //结束节点状态的下标
     int t = findStr(es, v);
 
     qDebug() << "t = " << t << endl;
@@ -201,7 +197,6 @@ void Game::findPath()
     //加入起始节点
     path.emplace_back(os);
     reverse(path.begin(), path.end());
-    vector<State>().swap(v);
-    vector<State>().swap(open);
-    vector<State>().swap(close);
+//    vector<State>().swap(v);
+//    vector<State>().swap(open);
 }

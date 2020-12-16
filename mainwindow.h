@@ -20,9 +20,15 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+
     ~MainWindow();
 
-    Game game = *new Game("", "");
+    Game game;
+
+    void set(){
+        game.os = str1.toStdString();
+        game.es = str2.toStdString();
+    }
 
     QString str1, str2;
 
@@ -58,6 +64,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
     QLineEdit *orign_line[9], *end_line[9];
 };
 
