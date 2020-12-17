@@ -30,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     originLine[6] = ui->origin_lineEdit_6;
     originLine[7] = ui->origin_lineEdit_7;
     originLine[8] = ui->origin_lineEdit_8;
-    //
     endLine[0] = ui->end_lineEdit_0;
     endLine[1] = ui->end_lineEdit_1;
     endLine[2] = ui->end_lineEdit_2;
@@ -43,12 +42,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     //默认速度
     ui->label_7->setText(QString::number(ui->horizontalSlider->value()));
-    //计算路径,自动执行，单步执行，清空按钮禁用
+    //禁用计算路径,自动执行，单步执行，清空按钮
     ui->findPathBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
     ui->manuOuputBtn->setDisabled(true);
-    ui->clearBtn->setDisabled(true);
+    //ui->clearBtn->setDisabled(true);
     ui->horizontalSlider->setDisabled(true);
+    //默认禁用所有LineEdit控件
+    setLineStatus(originLine, true);
+    setLineStatus(endLine, true);
 }
 
 MainWindow::~MainWindow()
@@ -56,14 +58,50 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//判断用户输入的合法性
+bool MainWindow::judgeInputValue(QString s)
+{
+    if (s.size() < 9)
+    {
+        return false;
+    }
+    int a[10] = {-1};
+    string v = s.toStdString();
+    for (int i = 0; i < 9; i++)
+    {
+        if (v[i] < 48 || v[i] > 57)
+        {
+            return false;
+        }
+        a[v[i] - '0'] = 1;
+    }
+    for (int i = 0; i < 9; i++)
+    {
+        if (a[i] == -1)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+//设置LineEdit的状态
+void MainWindow::setLineStatus(QLineEdit *a[9], bool flag)
+{
+    for (int i = 0; i < 9; i++)
+    {
+        a[i]->setReadOnly(flag);
+        a[i]->setMaxLength(1);
+    }
+}
+
 //设置九宫格输入
-void MainWindow::setLines(QString str, QLineEdit *a[9])
+void MainWindow::setLineValue(QString str, QLineEdit *a[9])
 {
     for (int i = 0; i < 9; i++)
     {
         //截取一个字符
-        QString s = str.mid(i, 1);
-        a[i]->setText(s);
+        a[i]->setText(str.mid(i, 1));
     }
 }
 
@@ -109,7 +147,7 @@ void MainWindow::wait(int times)
 }
 
 //获取输入的字符串
-QString MainWindow::getLines(QLineEdit *a[9])
+QString MainWindow::getLinesValue(QLineEdit *a[9])
 {
     QString s = "";
     for (int i = 0; i < 9; i++)
@@ -123,10 +161,9 @@ QString MainWindow::getLines(QLineEdit *a[9])
 void MainWindow::displayPath(int num, QString nowPath)
 {
     //清除当前路径
-    clearLines(originLine);
+    clearLineValue(originLine);
     //重新设置当前路径
-    setLines(nowPath, originLine);
-
+    setLineValue(nowPath, originLine);
     QString s = QString("第%0步,共%1步:%2\n").arg(QString::number(num)).arg(QString::number(game.pathLen)).arg(nowPath);
     ui->pathTextBrowser->insertPlainText(s);
 }
@@ -173,12 +210,19 @@ void MainWindow::on_manuOuputBtn_clicked()
         QMessageBox::warning(NULL, "警告", "请先生成路径");
         return;
     }
+    //禁用自动执行按钮
+    ui->autoOuputBtn->setDisabled(true);
+
     int num = game.pathLen - game.path.size();
     displayPath(num, QString::fromStdString(game.path[0]));
     if (game.path.empty())
     {
         QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLen) + "步");
         ui->pathTextBrowser->insertPlainText("共" + QString::number(game.pathLen) + "步");
+        //解禁自动执行按钮
+        //ui->autoOuputBtn->setDisabled(false);
+        //禁用单步执行按钮
+        ui->manuOuputBtn->setDisabled(true);
         return;
     }
     //删除路径中的首元素
@@ -190,9 +234,14 @@ void MainWindow::on_manuOuputBtn_clicked()
 //自动随机生成两个状态
 void MainWindow::on_autoInputBtn_clicked()
 {
+    //禁止lineEdit输入
+    //默认禁用所有LineEdit控件
+    setLineStatus(originLine, true);
+    setLineStatus(endLine, true);
     //解禁计算路径按钮
     ui->findPathBtn->setDisabled(false);
     //禁用其他按钮
+    ui->manuInputBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
     ui->manuOuputBtn->setDisabled(true);
 
@@ -211,29 +260,52 @@ void MainWindow::on_autoInputBtn_clicked()
     str1 = QString::fromStdString(s1);
     str2 = QString::fromStdString(s2);
     //先清除输入
-    clearLines(originLine);
-    clearLines(endLine);
+    clearLineValue(originLine);
+    clearLineValue(endLine);
     //设置
-    setLines(str1, originLine);
-    setLines(str2, endLine);
+    setLineValue(str1, originLine);
+    setLineValue(str2, endLine);
+}
+
+//手动输入
+void MainWindow::on_manuInputBtn_clicked()
+{
+    QMessageBox::warning(NULL, "警告", "请手动输入初始与结束状态");
+    //解禁LineEdit
+    setLineStatus(originLine, false);
+    setLineStatus(endLine, false);
+    //解禁计算路径
+    ui->findPathBtn->setDisabled(false);
+    //禁用自动生成
+    ui->autoInputBtn->setDisabled(true);
 }
 
 //计算路径
 void MainWindow::on_findPathBtn_clicked()
 {
-    str1 = getLines(originLine);
-    str2 = getLines(endLine);
+    str1 = getLinesValue(originLine);
+    str2 = getLinesValue(endLine);
+    //判断合法性
+    if (!judgeInputValue(str1) || !judgeInputValue(str2))
+    {
+        QMessageBox::warning(NULL, "警告", "请检查输入的合法性");
+        return;
+    }
+    //如果不可达
+    if (!game.isOdevity(str1.toStdString(), str2.toStdString()))
+    {
+        QMessageBox::warning(NULL, "警告", "不可达请重新输入");
+        on_clearBtn_clicked();
+        return;
+    }
+    //默认禁用所有LineEdit控件
+    setLineStatus(originLine, true);
+    setLineStatus(endLine, true);
+
     //给状态f赋值
     game.os = str1.toStdString();
     game.es = str2.toStdString();
-    //如果不可达
-    if (!game.isOdevity(game.os, game.es))
-    {
-        QMessageBox::warning(this, tr("警告"), tr("不可达请重新输入"));
-        on_clearBtn_clicked();
 
-        return;
-    }
     //禁用生成状态，计算路径按钮
     ui->findPathBtn->setDisabled(true);
     ui->autoInputBtn->setDisabled(true);
@@ -262,7 +334,7 @@ void MainWindow::on_findPathBtn_clicked()
 }
 
 //清除输入的值
-void MainWindow::clearLines(QLineEdit *a[9])
+void MainWindow::clearLineValue(QLineEdit *a[9])
 {
     //先清除输入
     for (int i = 0; i < 9; i++)
@@ -278,10 +350,12 @@ void MainWindow::on_clearBtn_clicked()
     ui->findPathBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
     ui->manuOuputBtn->setDisabled(true);
-    ui->clearBtn->setDisabled(true);
     ui->manuOuputBtn->setDisabled(true);
     //禁用调速按钮
     ui->horizontalSlider->setDisabled(true);
+    //默认禁用所有LineEdit控件
+    setLineStatus(originLine, true);
+    setLineStatus(endLine, true);
 
     //恢复生成状态按钮
     ui->autoInputBtn->setDisabled(false);
@@ -290,8 +364,8 @@ void MainWindow::on_clearBtn_clicked()
     ui->horizontalSlider->setValue(50);
 
     //清楚初始与结束状态
-    clearLines(originLine);
-    clearLines(endLine);
+    clearLineValue(originLine);
+    clearLineValue(endLine);
     ui->pathTextBrowser->clear();
     ui->open_textBrowser->clear();
     ui->close_textBrowser->clear();
@@ -312,9 +386,4 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
 void MainWindow::on_pathTextBrowser_sourceChanged(const QUrl &arg1)
 {
     ui->pathTextBrowser->moveCursor(QTextCursor::End);
-}
-
-//手动输入
-void MainWindow::on_manuInputBtn_clicked()
-{
 }

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1020</width>
+    <width>956</width>
     <height>857</height>
    </rect>
   </property>
@@ -485,8 +485,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>0</y>
+      <x>670</x>
+      <y>10</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -542,9 +542,9 @@
    <widget class="QPushButton" name="autoOuputBtn">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>690</y>
-      <width>141</width>
+      <x>160</x>
+      <y>750</y>
+      <width>131</width>
       <height>51</height>
      </rect>
     </property>
@@ -571,7 +571,7 @@ border-style: outset;</string>
      <rect>
       <x>20</x>
       <y>690</y>
-      <width>141</width>
+      <width>131</width>
       <height>51</height>
      </rect>
     </property>
@@ -598,9 +598,9 @@ border-style: outset;</string>
    <widget class="QPushButton" name="clearBtn">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>750</y>
-      <width>141</width>
+      <x>300</x>
+      <y>690</y>
+      <width>131</width>
       <height>51</height>
      </rect>
     </property>
@@ -619,15 +619,15 @@ border: 2px groove rgb(199, 199, 199);
 border-style: outset;</string>
     </property>
     <property name="text">
-     <string>重       置</string>
+     <string>初始化</string>
     </property>
    </widget>
    <widget class="QPushButton" name="manuOuputBtn">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>300</x>
       <y>750</y>
-      <width>141</width>
+      <width>131</width>
       <height>51</height>
      </rect>
     </property>
@@ -652,10 +652,10 @@ border-style: outset;</string>
    <widget class="QSlider" name="horizontalSlider">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>710</y>
-      <width>211</width>
-      <height>61</height>
+      <x>770</x>
+      <y>720</y>
+      <width>161</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -686,9 +686,9 @@ border-style: outset;</string>
    <widget class="QPushButton" name="findPathBtn">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>690</y>
-      <width>141</width>
+      <x>20</x>
+      <y>750</y>
+      <width>131</width>
       <height>51</height>
      </rect>
     </property>
@@ -713,7 +713,7 @@ border-style: outset;</string>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>690</x>
       <y>700</y>
       <width>81</width>
       <height>71</height>
@@ -735,7 +735,7 @@ border-style: outset;</string>
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>620</x>
       <y>700</y>
       <width>81</width>
       <height>71</height>
@@ -757,9 +757,9 @@ border-style: outset;</string>
    <widget class="QPushButton" name="manuInputBtn">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>750</y>
-      <width>141</width>
+      <x>160</x>
+      <y>690</y>
+      <width>131</width>
       <height>51</height>
      </rect>
     </property>

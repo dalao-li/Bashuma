@@ -28,13 +28,16 @@ public:
     QString str1, str2;
 
     //清除输入
-    void clearLines(QLineEdit *a[9]);
+    void clearLineValue(QLineEdit *a[9]);
 
     //设置默认输入
-    void setLines(QString str, QLineEdit *a[9]);
+    void setLineValue(QString str, QLineEdit *a[9]);
+
+    //设置输入框状态
+    void setLineStatus(QLineEdit *a[9], bool flag);
 
     //将九宫格输入转化为字符串
-    QString getLines(QLineEdit *a[9]);
+    QString getLinesValue(QLineEdit *a[9]);
 
     //产生随机字符串
     string randomStr();
@@ -47,6 +50,9 @@ public:
 
     //输出open与close表
     void ouputTable(QTextBrowser text, vector<string> v);
+
+    //判断LineEdit的合法性
+    bool judgeInputValue(QString s);
 
 private slots:
     void on_autoOuputBtn_clicked();
