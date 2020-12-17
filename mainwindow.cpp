@@ -96,12 +96,19 @@ void MainWindow::setLineStatus(QLineEdit *a[9], bool flag)
 }
 
 //设置九宫格输入
-void MainWindow::setLineValue(QString str, QLineEdit *a[9])
+void MainWindow::setLineValue(QString s, QLineEdit *a[9])
 {
     for (int i = 0; i < 9; i++)
     {
         //截取一个字符
-        a[i]->setText(str.mid(i, 1));
+        if (s[i] != '0')
+        {
+            a[i]->setText(s.mid(i, 1));
+        }
+        else
+        {
+            a[i]->setText(" ");
+        }
     }
 }
 
@@ -152,8 +159,16 @@ QString MainWindow::getLinesValue(QLineEdit *a[9])
     QString s = "";
     for (int i = 0; i < 9; i++)
     {
-        s += a[i]->text();
+        if (a[i]->text() == " ")
+        {
+            s += '0';
+        }
+        else
+        {
+            s += a[i]->text();
+        }
     }
+    qDebug() << "-----" << s << endl;
     return s;
 }
 
