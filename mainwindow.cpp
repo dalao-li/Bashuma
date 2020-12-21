@@ -69,12 +69,14 @@ bool MainWindow::judgeInputValue(QString s)
     string v = s.toStdString();
     for (int i = 0; i < 9; i++)
     {
+        //包含非数字
         if (v[i] < 48 || v[i] > 57)
         {
             return false;
         }
         a[v[i] - '0'] = 1;
     }
+    //出现重复数字
     for (int i = 0; i < 9; i++)
     {
         if (a[i] == -1)
@@ -95,7 +97,7 @@ void MainWindow::setLineStatus(QLineEdit *a[9], bool flag)
     }
 }
 
-//设置九宫格输入
+//将字符串赋与LineEdit
 void MainWindow::setLineValue(QString s, QLineEdit *a[9])
 {
     for (int i = 0; i < 9; i++)
@@ -105,6 +107,7 @@ void MainWindow::setLineValue(QString s, QLineEdit *a[9])
         {
             a[i]->setText(s.mid(i, 1));
         }
+        //若是0则写入空
         else
         {
             a[i]->setText(" ");
@@ -112,7 +115,7 @@ void MainWindow::setLineValue(QString s, QLineEdit *a[9])
     }
 }
 
-//随机产生状态
+//随机产生状态字符串
 string MainWindow::randomStr()
 {
     string s = "";
@@ -143,7 +146,7 @@ string MainWindow::randomStr()
 //延时函数
 void MainWindow::wait(int times)
 {
-    //等待时间流逝1秒钟
+    //等待时间流逝秒钟
     QTime time;
     time.start();
     while (time.elapsed() < times)
@@ -153,7 +156,7 @@ void MainWindow::wait(int times)
     }
 }
 
-//获取输入的字符串
+//将LineEdit中的值转换为字符串
 QString MainWindow::getLinesValue(QLineEdit *a[9])
 {
     QString s = "";
@@ -168,12 +171,12 @@ QString MainWindow::getLinesValue(QLineEdit *a[9])
             s += a[i]->text();
         }
     }
-    qDebug() << "-----" << s << endl;
+    //qDebug() << "-----" << s << endl;
     return s;
 }
 
 //显示单步路径，参数为当前的步数和当前状态
-void MainWindow::displayPath(int num, QString nowPath)
+void MainWindow::displayOncePath(int num, QString nowPath)
 {
     //清除当前路径
     clearLineValue(originLine);
@@ -203,7 +206,7 @@ void MainWindow::on_autoOuputBtn_clicked()
 
     for (int i = 0; i < game.path.size(); i++)
     {
-        displayPath(i + 1, QString::fromStdString(game.path[i]));
+        displayOncePath(i + 1, QString::fromStdString(game.path[i]));
         //延时
         int time = 10 * (100 - ui->horizontalSlider->value());
         wait(time);
@@ -229,13 +232,11 @@ void MainWindow::on_manuOuputBtn_clicked()
     ui->autoOuputBtn->setDisabled(true);
 
     int num = game.pathLen - game.path.size();
-    displayPath(num, QString::fromStdString(game.path[0]));
+    displayOncePath(num, QString::fromStdString(game.path[0]));
     if (game.path.empty())
     {
         QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLen) + "步");
         ui->pathTextBrowser->insertPlainText("共" + QString::number(game.pathLen) + "步");
-        //解禁自动执行按钮
-        //ui->autoOuputBtn->setDisabled(false);
         //禁用单步执行按钮
         ui->manuOuputBtn->setDisabled(true);
         return;
@@ -249,7 +250,6 @@ void MainWindow::on_manuOuputBtn_clicked()
 //自动随机生成两个状态
 void MainWindow::on_autoInputBtn_clicked()
 {
-    //禁止lineEdit输入
     //默认禁用所有LineEdit控件
     setLineStatus(originLine, true);
     setLineStatus(endLine, true);

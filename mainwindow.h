@@ -46,7 +46,7 @@ public:
     void wait(int times);
 
     //输出路径
-    void displayPath(int num, QString nowPath);
+    void displayOncePath(int num, QString nowPath);
 
     //输出open与close表
     void ouputTable(QTextBrowser text, vector<string> v);

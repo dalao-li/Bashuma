@@ -543,7 +543,7 @@
     <property name="geometry">
      <rect>
       <x>160</x>
-      <y>750</y>
+      <y>690</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -599,7 +599,7 @@ border-style: outset;</string>
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>690</y>
+      <y>750</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -625,7 +625,7 @@ border-style: outset;</string>
    <widget class="QPushButton" name="manuOuputBtn">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>160</x>
       <y>750</y>
       <width>131</width>
       <height>51</height>
@@ -757,7 +757,7 @@ border-style: outset;</string>
    <widget class="QPushButton" name="manuInputBtn">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>300</x>
       <y>690</y>
       <width>131</width>
       <height>51</height>
