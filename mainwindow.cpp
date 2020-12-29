@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <QTime>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -19,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     // 设置拖动窗口大小，这样的操作会使页面无法最大化;x,y 宽，长
     setFixedSize(960, 825);
-
     //将组件替换为数组以bian一会操作
     originLine[0] = ui->origin_lineEdit_0;
     originLine[1] = ui->origin_lineEdit_1;
@@ -46,7 +46,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->findPathBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
     ui->manuOuputBtn->setDisabled(true);
-    //ui->clearBtn->setDisabled(true);
     ui->horizontalSlider->setDisabled(true);
     //默认禁用所有LineEdit控件
     setLineStatus(originLine, true);
@@ -59,7 +58,7 @@ MainWindow::~MainWindow()
 }
 
 //判断用户输入的合法性
-bool MainWindow::judgeInputValue(QString s)
+bool MainWindow::judgeInput(QString s)
 {
     if (s.size() < 9)
     {
@@ -69,14 +68,14 @@ bool MainWindow::judgeInputValue(QString s)
     string v = s.toStdString();
     for (int i = 0; i < 9; i++)
     {
-        //包含非数字
+        //若包含非数字
         if (v[i] < 48 || v[i] > 57)
         {
             return false;
         }
         a[v[i] - '0'] = 1;
     }
-    //出现重复数字
+    //判断0-9数字是否都出现了
     for (int i = 0; i < 9; i++)
     {
         if (a[i] == -1)
@@ -171,18 +170,18 @@ QString MainWindow::getLinesValue(QLineEdit *a[9])
             s += a[i]->text();
         }
     }
-    //qDebug() << "-----" << s << endl;
     return s;
 }
 
 //显示单步路径，参数为当前的步数和当前状态
-void MainWindow::displayOncePath(int num, QString nowPath)
+void MainWindow::displayOncePath(int num)
 {
     //清除当前路径
     clearLineValue(originLine);
+    QString nowPath = QString::fromStdString(game.path[num - 1]);
     //重新设置当前路径
     setLineValue(nowPath, originLine);
-    QString s = QString("第%0步,共%1步:%2\n").arg(QString::number(num)).arg(QString::number(game.pathLen)).arg(nowPath);
+    QString s = QString("第%0步,共%1步:%2\n").arg(QString::number(num)).arg(QString::number(game.path.size())).arg(nowPath);
     ui->pathTextBrowser->insertPlainText(s);
 }
 
@@ -203,15 +202,14 @@ void MainWindow::on_autoOuputBtn_clicked()
     //禁用生成状态和计算路径按钮
     ui->findPathBtn->setDisabled(true);
     ui->autoInputBtn->setDisabled(true);
-
     for (int i = 0; i < game.path.size(); i++)
     {
-        displayOncePath(i + 1, QString::fromStdString(game.path[i]));
+        displayOncePath(i + 1);
         //延时
         int time = 10 * (100 - ui->horizontalSlider->value());
         wait(time);
     }
-    QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLen) + "步");
+    QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.path.size()) + "步");
 
     //恢复单步执行按钮
     ui->manuOuputBtn->setEnabled(true);
@@ -223,28 +221,26 @@ void MainWindow::on_autoOuputBtn_clicked()
 void MainWindow::on_manuOuputBtn_clicked()
 {
     //异常判断
-    if (game.pathLen == 0)
+    if (game.path.size() == 0)
     {
         QMessageBox::warning(NULL, "警告", "请先生成路径");
         return;
     }
     //禁用自动执行按钮
     ui->autoOuputBtn->setDisabled(true);
-
-    int num = game.pathLen - game.path.size();
-    displayOncePath(num, QString::fromStdString(game.path[0]));
-    if (game.path.empty())
+    int num = game.path.size() - game.pathLen;
+    displayOncePath(num + 1);
+    game.pathLen--;
+    if (game.pathLen < 0)
     {
-        QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.pathLen) + "步");
-        ui->pathTextBrowser->insertPlainText("共" + QString::number(game.pathLen) + "步");
-        //禁用单步执行按钮
-        ui->manuOuputBtn->setDisabled(true);
+        QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.path.size()) + "步");
+        ui->pathTextBrowser->insertPlainText("共" + QString::number(game.path.size()) + "步\n\n");
+        //恢复
+        game.pathLen = game.path.size();
+        ui->autoOuputBtn->setDisabled(false);
+        ui->pathTextBrowser->clear();
         return;
     }
-    //删除路径中的首元素
-    reverse(game.path.begin(), game.path.end());
-    game.path.pop_back();
-    reverse(game.path.begin(), game.path.end());
 }
 
 //自动随机生成两个状态
@@ -301,7 +297,7 @@ void MainWindow::on_findPathBtn_clicked()
     str1 = getLinesValue(originLine);
     str2 = getLinesValue(endLine);
     //判断合法性
-    if (!judgeInputValue(str1) || !judgeInputValue(str2))
+    if (!judgeInput(str1) || !judgeInput(str2))
     {
         QMessageBox::warning(NULL, "警告", "请检查输入的合法性");
         return;
@@ -329,7 +325,9 @@ void MainWindow::on_findPathBtn_clicked()
     //开始计算八数码
     game.start();
 
-    QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.pathLen) + "步");
+    QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.path.size()) + "步");
+
+    game.pathLen = game.path.size();
 
     //输出open与close表
     for (int i = 0, size = game.openTable.size(); i < size; i++)

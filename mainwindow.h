@@ -46,13 +46,13 @@ public:
     void wait(int times);
 
     //输出路径
-    void displayOncePath(int num, QString nowPath);
+    void displayOncePath(int num);
 
     //输出open与close表
     void ouputTable(QTextBrowser text, vector<string> v);
 
     //判断LineEdit的合法性
-    bool judgeInputValue(QString s);
+    bool judgeInput(QString s);
 
 private slots:
     void on_autoOuputBtn_clicked();

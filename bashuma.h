@@ -47,7 +47,7 @@ public:
     vector<string> path;
     vector<QString> openTable;
     vector<QString> closeTable;
-    //路径长度
+    //记录当前是第几步路径
     int pathLen;
     //可移动路径
     // 0,1,2
@@ -65,10 +65,7 @@ public:
                       {-1, -1, 5, 7}};
     Game() {}
     Game(string os, string es);
-    ~Game()
-    {
-        //qDebug() << "析构" << endl;
-    }
+    ~Game(){}
     bool isOdevity(string os, string es);
 
     //更新当前状态

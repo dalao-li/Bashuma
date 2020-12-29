@@ -592,7 +592,7 @@ border: 2px groove rgb(0, 170, 255);
 border-style: outset;</string>
     </property>
     <property name="text">
-     <string>自动生成</string>
+     <string>生成状态</string>
     </property>
    </widget>
    <widget class="QPushButton" name="clearBtn">
