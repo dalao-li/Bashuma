@@ -45,6 +45,7 @@ public:
     vector<State> open;
     vector<State> close;
     vector<string> path;
+    
     vector<QString> openTable;
     vector<QString> closeTable;
     //可移动路径
@@ -67,19 +68,16 @@ public:
     bool isOdevity(string os, string es);
 
     //更新当前状态
-    void findState(State St);
+    void updateState(State St);
 
     //寻找节点的坐标
-    int findStr(const string &str, const vector<State> &v);
+    int findStrIndex(const string &str, const vector<State> &v);
 
     //设置h值
     int setWeight(string str);
 
     //生成路径
     void findPath();
-
-    //主循环
-    void start();
 
 } Game;
 

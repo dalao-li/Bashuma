@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     //窗口透明度
     setWindowOpacity(0.97);
     // 禁止最大化按钮
@@ -39,7 +38,6 @@ MainWindow::MainWindow(QWidget *parent)
     endLine[6] = ui->end_lineEdit_6;
     endLine[7] = ui->end_lineEdit_7;
     endLine[8] = ui->end_lineEdit_8;
-
     //默认速度
     ui->label_7->setText(QString::number(ui->horizontalSlider->value()));
     //禁用计算路径,自动执行,单步执行,清空按钮
@@ -49,7 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
     //禁用上一步下一步按钮
     ui->afterPathBtn->setDisabled(true);
     ui->nextPathBtn->setDisabled(true);
-
     //默认禁用所有LineEdit控件
     setLineStatus(originLine, true);
     setLineStatus(endLine, true);
@@ -312,7 +309,7 @@ void MainWindow::on_findPathBtn_clicked()
     game.os = originInput.toStdString();
     game.es = endInput.toStdString();
     //开始计算八数码
-    game.start();
+    game.findPath();
     QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.path.size()) + "步");
     //解禁自动执行,清空按钮,下一步按钮
     ui->autoOuputBtn->setDisabled(false);
@@ -344,15 +341,13 @@ void MainWindow::clearLine(QLineEdit *a[9])
 //清空输入
 void MainWindow::on_clearBtn_clicked()
 {
-    //禁用自动执行,单步执行,清空
+    //禁用自动执行,上一步下一步
     ui->findPathBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
+    ui->afterPathBtn->setDisabled(true);
+    ui->nextPathBtn->setDisabled(true);
     //禁用调速按钮
     ui->horizontalSlider->setDisabled(true);
-    //默认禁用所有LineEdit控件
-    setLineStatus(originLine, true);
-    setLineStatus(endLine, true);
-
     //恢复生成状态按钮
     ui->autoInputBtn->setDisabled(false);
     ui->manuInputBtn->setDisabled(false);
@@ -362,6 +357,10 @@ void MainWindow::on_clearBtn_clicked()
     //清除初始与结束状态
     clearLine(originLine);
     clearLine(endLine);
+    //默认禁用所有LineEdit控件
+    setLineStatus(originLine, true);
+    setLineStatus(endLine, true);
+
     ui->pathTextBrowser->clear();
     ui->open_textBrowser->clear();
     ui->close_textBrowser->clear();
