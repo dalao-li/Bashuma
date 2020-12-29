@@ -25,31 +25,31 @@ public:
 
     Game game;
 
-    QString str1, str2;
+    QString originInput, endInput;
 
     //记录当前时第几步
     int pathNum = 0;
 
     //清除输入
-    void clearLineValue(QLineEdit *a[9]);
+    void clearLine(QLineEdit *a[9]);
 
     //设置默认输入
-    void setLineValue(QString str, QLineEdit *a[9]);
+    void setLine(QString str, QLineEdit *a[9]);
 
     //设置输入框状态
     void setLineStatus(QLineEdit *a[9], bool flag);
 
     //将九宫格输入转化为字符串
-    QString getLinesValue(QLineEdit *a[9]);
+    QString getLineValue(QLineEdit *a[9]);
 
     //产生随机字符串
-    string randomStr();
+    string getRandomStr();
 
     //延时函数
     void wait(int times);
 
     //输出路径
-    void displayNowPath(int num);
+    void ouputPath(int num);
 
     //输出open与close表
     void ouputTable(QTextBrowser text, vector<string> v);
@@ -63,8 +63,6 @@ private slots:
     void on_autoInputBtn_clicked();
 
     void on_clearBtn_clicked();
-
-    void on_manuOuputBtn_clicked();
 
     void on_findPathBtn_clicked();
 

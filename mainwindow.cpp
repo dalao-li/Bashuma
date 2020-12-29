@@ -45,7 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
     //禁用计算路径,自动执行,单步执行,清空按钮
     ui->findPathBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
-    ui->manuOuputBtn->setDisabled(true);
     ui->horizontalSlider->setDisabled(true);
     //禁用上一步下一步按钮
     ui->afterPathBtn->setDisabled(true);
@@ -102,7 +101,7 @@ void MainWindow::setLineStatus(QLineEdit *a[9], bool flag)
 }
 
 //将字符串赋与LineEdit
-void MainWindow::setLineValue(QString s, QLineEdit *a[9])
+void MainWindow::setLine(QString s, QLineEdit *a[9])
 {
     for (int i = 0; i < 9; i++)
     {
@@ -120,7 +119,7 @@ void MainWindow::setLineValue(QString s, QLineEdit *a[9])
 }
 
 //随机产生状态字符串
-string MainWindow::randomStr()
+string MainWindow::getRandomStr()
 {
     string s = "";
     while (s.size() < 9)
@@ -161,7 +160,7 @@ void MainWindow::wait(int times)
 }
 
 //将LineEdit中的值转换为字符串
-QString MainWindow::getLinesValue(QLineEdit *a[9])
+QString MainWindow::getLineValue(QLineEdit *a[9])
 {
     QString s = "";
     for (int i = 0; i < 9; i++)
@@ -179,7 +178,7 @@ QString MainWindow::getLinesValue(QLineEdit *a[9])
 }
 
 //显示单步路径,参数为当前的步数和当前状态
-void MainWindow::displayNowPath(int num)
+void MainWindow::ouputPath(int num)
 {
     //num范围
     if (num < 0)
@@ -197,10 +196,10 @@ void MainWindow::displayNowPath(int num)
         return;
     }
     //清除当前路径
-    clearLineValue(originLine);
+    clearLine(originLine);
     QString nowPath = QString::fromStdString(game.path[num]);
     //重新设置当前路径
-    setLineValue(nowPath, originLine);
+    setLine(nowPath, originLine);
     //pathTextBrowser输出
     QString s = QString("第%0步,共%1步").arg(QString::number(num + 1)).arg(QString::number(game.path.size()));
     ui->pathTextBrowser->insertPlainText(s + ": " + nowPath + "\n");
@@ -218,45 +217,24 @@ void MainWindow::on_autoOuputBtn_clicked()
         return;
     }
     ui->pathTextBrowser->clear();
-    //禁用单步执行按钮,清空按钮,生成状态和计算路径按钮
-    ui->manuOuputBtn->setDisabled(true);
+    //禁用清空按钮,生成状态和计算路径,上一步下一步按钮
     ui->clearBtn->setDisabled(true);
     ui->findPathBtn->setDisabled(true);
     ui->autoInputBtn->setDisabled(true);
+    ui->afterPathBtn->setDisabled(true);
+    ui->nextPathBtn->setDisabled(true);
     for (int i = 0; i < game.path.size(); i++)
     {
-        displayNowPath(i);
+        ouputPath(i);
         //延时
         int time = 10 * (100 - ui->horizontalSlider->value());
         wait(time);
     }
     QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.path.size()) + "步");
-    //恢复单步执行按钮,清空按钮
-    ui->manuOuputBtn->setDisabled(false);
+    //恢复清空按钮
     ui->clearBtn->setDisabled(false);
-}
-
-//单步执行输出八数码求解路径
-void MainWindow::on_manuOuputBtn_clicked()
-{
-    //异常判断
-    if (game.path.size() == 0)
-    {
-        QMessageBox::warning(NULL, "警告", "请先生成路径");
-        return;
-    }
-    //首步
-    if (pathNum == 0)
-    {
-        setLineValue(str1, originLine);
-        setLineValue(str2, endLine);
-        ui->pathTextBrowser->clear();
-    }
-    //禁用自动执行按钮
-    ui->autoOuputBtn->setDisabled(true);
-    //显示本次路径
-    displayNowPath(pathNum);
-    pathNum += 1;
+    ui->afterPathBtn->setDisabled(false);
+    ui->nextPathBtn->setDisabled(false);
 }
 
 //自动随机生成两个状态
@@ -268,7 +246,6 @@ void MainWindow::on_autoInputBtn_clicked()
     //禁用其他按钮
     ui->manuInputBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
-    ui->manuOuputBtn->setDisabled(true);
     //解禁计算路径按钮
     ui->findPathBtn->setDisabled(false);
     srand((int)time(0));
@@ -276,21 +253,21 @@ void MainWindow::on_autoInputBtn_clicked()
     string s2 = "";
     while (1)
     {
-        s1 = randomStr();
-        s2 = randomStr();
+        s1 = getRandomStr();
+        s2 = getRandomStr();
         if (game.isOdevity(s1, s2))
         {
             break;
         }
     }
-    str1 = QString::fromStdString(s1);
-    str2 = QString::fromStdString(s2);
+    originInput = QString::fromStdString(s1);
+    endInput = QString::fromStdString(s2);
     //先清除输入
-    clearLineValue(originLine);
-    clearLineValue(endLine);
+    clearLine(originLine);
+    clearLine(endLine);
     //设置
-    setLineValue(str1, originLine);
-    setLineValue(str2, endLine);
+    setLine(originInput, originLine);
+    setLine(endInput, endLine);
 }
 
 //手动输入状态
@@ -309,16 +286,16 @@ void MainWindow::on_manuInputBtn_clicked()
 //计算路径
 void MainWindow::on_findPathBtn_clicked()
 {
-    str1 = getLinesValue(originLine);
-    str2 = getLinesValue(endLine);
+    originInput = getLineValue(originLine);
+    endInput = getLineValue(endLine);
     //判断合法性
-    if (!judgeInput(str1) || !judgeInput(str2))
+    if (!judgeInput(originInput) || !judgeInput(endInput))
     {
         QMessageBox::warning(NULL, "警告", "请检查输入的合法性");
         return;
     }
     //如果不可达
-    if (!game.isOdevity(str1.toStdString(), str2.toStdString()))
+    if (!game.isOdevity(originInput.toStdString(), endInput.toStdString()))
     {
         QMessageBox::warning(NULL, "警告", "不可达请重新输入");
         on_clearBtn_clicked();
@@ -332,14 +309,13 @@ void MainWindow::on_findPathBtn_clicked()
     setLineStatus(originLine, true);
     setLineStatus(endLine, true);
     //给状态f赋值
-    game.os = str1.toStdString();
-    game.es = str2.toStdString();
+    game.os = originInput.toStdString();
+    game.es = endInput.toStdString();
     //开始计算八数码
     game.start();
     QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.path.size()) + "步");
-    //解禁自动执行,单步执行,清空按钮,下一步按钮
+    //解禁自动执行,清空按钮,下一步按钮
     ui->autoOuputBtn->setDisabled(false);
-    ui->manuOuputBtn->setDisabled(false);
     ui->clearBtn->setDisabled(false);
     ui->nextPathBtn->setDisabled(false);
     //解禁调速按钮
@@ -356,7 +332,7 @@ void MainWindow::on_findPathBtn_clicked()
 }
 
 //清除输入的值
-void MainWindow::clearLineValue(QLineEdit *a[9])
+void MainWindow::clearLine(QLineEdit *a[9])
 {
     //先清除输入
     for (int i = 0; i < 9; i++)
@@ -371,8 +347,6 @@ void MainWindow::on_clearBtn_clicked()
     //禁用自动执行,单步执行,清空
     ui->findPathBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
-    ui->manuOuputBtn->setDisabled(true);
-    ui->manuOuputBtn->setDisabled(true);
     //禁用调速按钮
     ui->horizontalSlider->setDisabled(true);
     //默认禁用所有LineEdit控件
@@ -386,8 +360,8 @@ void MainWindow::on_clearBtn_clicked()
     ui->horizontalSlider->setValue(50);
 
     //清除初始与结束状态
-    clearLineValue(originLine);
-    clearLineValue(endLine);
+    clearLine(originLine);
+    clearLine(endLine);
     ui->pathTextBrowser->clear();
     ui->open_textBrowser->clear();
     ui->close_textBrowser->clear();
@@ -415,7 +389,7 @@ void MainWindow::on_pathTextBrowser_sourceChanged(const QUrl &arg1)
 void MainWindow::on_afterPathBtn_clicked()
 {
     pathNum--;
-    displayNowPath(pathNum);
+    ouputPath(pathNum);
 }
 
 //下一步
@@ -425,8 +399,8 @@ void MainWindow::on_nextPathBtn_clicked()
     ui->afterPathBtn->setDisabled(false);
     if (pathNum == 0)
     {
-        displayNowPath(0);
+        ouputPath(0);
     }
     pathNum++;
-    displayNowPath(pathNum);
+    ouputPath(pathNum);
 }
