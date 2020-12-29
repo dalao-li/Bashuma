@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowOpacity(0.97);
     // 禁止最大化按钮
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
-    // 设置拖动窗口大小，这样的操作会使页面无法最大化;x,y 宽，长
+    // 设置拖动窗口大小,这样的操作会使页面无法最大化;x,y 宽,长
     setFixedSize(960, 825);
     //将组件替换为数组以bian一会操作
     originLine[0] = ui->origin_lineEdit_0;
@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //默认速度
     ui->label_7->setText(QString::number(ui->horizontalSlider->value()));
-    //禁用计算路径,自动执行，单步执行，清空按钮
+    //禁用计算路径,自动执行,单步执行,清空按钮
     ui->findPathBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
     ui->manuOuputBtn->setDisabled(true);
@@ -178,23 +178,21 @@ QString MainWindow::getLinesValue(QLineEdit *a[9])
     return s;
 }
 
-//显示单步路径，参数为当前的步数和当前状态
+//显示单步路径,参数为当前的步数和当前状态
 void MainWindow::displayNowPath(int num)
 {
     //num范围
     if (num < 0)
     {
-        pathNum = 0;
-        QMessageBox::warning(NULL, "警告", "已到达初始状态");
+        pathNum = game.path.size();
+        //QMessageBox::warning(NULL, "警告", "已到达初始状态");
         return;
     }
     //到达终点
     if (num >= game.path.size())
     {
-        QMessageBox::warning(NULL, "警告", "已到达最终状态");
-        ui->pathTextBrowser->insertPlainText("共" + QString::number(game.path.size()) + "步\n\n");
-        //恢复
         pathNum = 0;
+        //恢复自动执行按钮
         ui->autoOuputBtn->setDisabled(false);
         return;
     }
@@ -326,7 +324,7 @@ void MainWindow::on_findPathBtn_clicked()
         on_clearBtn_clicked();
         return;
     }
-    //禁用生成状态，计算路径按钮
+    //禁用生成状态,计算路径按钮
     ui->findPathBtn->setDisabled(true);
     ui->autoInputBtn->setDisabled(true);
     ui->manuInputBtn->setDisabled(true);
@@ -339,10 +337,11 @@ void MainWindow::on_findPathBtn_clicked()
     //开始计算八数码
     game.start();
     QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.path.size()) + "步");
-    //解禁自动执行，单步执行，清空按钮
+    //解禁自动执行,单步执行,清空按钮,下一步按钮
     ui->autoOuputBtn->setDisabled(false);
     ui->manuOuputBtn->setDisabled(false);
     ui->clearBtn->setDisabled(false);
+    ui->nextPathBtn->setDisabled(false);
     //解禁调速按钮
     ui->horizontalSlider->setDisabled(false);
     //输出open与close表
@@ -369,7 +368,7 @@ void MainWindow::clearLineValue(QLineEdit *a[9])
 //清空输入
 void MainWindow::on_clearBtn_clicked()
 {
-    //禁用自动执行，单步执行，清空
+    //禁用自动执行,单步执行,清空
     ui->findPathBtn->setDisabled(true);
     ui->autoOuputBtn->setDisabled(true);
     ui->manuOuputBtn->setDisabled(true);
@@ -415,9 +414,19 @@ void MainWindow::on_pathTextBrowser_sourceChanged(const QUrl &arg1)
 //上一步
 void MainWindow::on_afterPathBtn_clicked()
 {
+    pathNum--;
+    displayNowPath(pathNum);
 }
 
 //下一步
 void MainWindow::on_nextPathBtn_clicked()
 {
+    //解禁after按钮
+    ui->afterPathBtn->setDisabled(false);
+    if (pathNum == 0)
+    {
+        displayNowPath(0);
+    }
+    pathNum++;
+    displayNowPath(pathNum);
 }

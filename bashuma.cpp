@@ -86,17 +86,17 @@ void Game::findState(State St)
                 if (n == -1)
                 {
                     //写入QT控件
-                    openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(ns) + "不在open表中，加入");
+                    openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(ns) + "不在open表中,加入");
                     open.emplace_back(ns, St.str, St.g + 1, setWeight(ns));
                 }
-                //否则，若经过当前状态可以使路径更优
+                //否则,若经过当前状态可以使路径更优
                 else if (St.g + 1 < open[n].g)
                 {
-                    //将当前状态的节点设为交换后状态的父节点，并更新g值
+                    //将当前状态的节点设为交换后状态的父节点,并更新g值
                     open[n].upState(St.str, St.g + 1);
 
                     //写入QT控件
-                    openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(ns + "在open表中，g值更新为") + QString::number(St.g + 1));
+                    openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(ns + "在open表中,g值更新为") + QString::number(St.g + 1));
                 }
             }
             if (ns == es)
