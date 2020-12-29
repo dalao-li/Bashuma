@@ -164,7 +164,6 @@ void Game::start()
         findState(open[open.size() - 1]);
     }
     findPath();
-    pathLen = path.size();
 }
 
 //生成整个转移过程的路径

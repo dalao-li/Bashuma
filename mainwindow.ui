@@ -542,8 +542,8 @@
    <widget class="QPushButton" name="autoOuputBtn">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>680</y>
+      <x>150</x>
+      <y>690</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -569,8 +569,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="autoInputBtn">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>680</y>
+      <x>10</x>
+      <y>690</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -598,8 +598,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="clearBtn">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>740</y>
+      <x>290</x>
+      <y>750</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -625,8 +625,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="manuOuputBtn">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>740</y>
+      <x>150</x>
+      <y>750</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -686,8 +686,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="findPathBtn">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>740</y>
+      <x>10</x>
+      <y>750</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -757,8 +757,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="manuInputBtn">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>680</y>
+      <x>290</x>
+      <y>690</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -800,6 +800,64 @@ border-style: outset;</string>
     </property>
     <property name="text">
      <string>第0步 共0步</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="nextPathBtn">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>750</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;  
+
+selection-background-color: rgb(85, 255, 0);
+background-color: rgb(85, 255, 0);
+border: 2px groove rgb(85, 255, 0);
+border-style: outset;</string>
+    </property>
+    <property name="text">
+     <string>下一步</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="afterPathBtn">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>690</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;  
+
+selection-background-color: rgb(255, 0, 0);
+background-color: rgb(255, 0, 0);
+border: 2px groove rgb(255, 0, 0);
+border-style: outset;</string>
+    </property>
+    <property name="text">
+     <string>上一步</string>
     </property>
    </widget>
   </widget>

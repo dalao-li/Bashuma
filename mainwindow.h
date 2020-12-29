@@ -27,6 +27,9 @@ public:
 
     QString str1, str2;
 
+    //记录当前时第几步
+    int pathNum = 0;
+
     //清除输入
     void clearLineValue(QLineEdit *a[9]);
 
@@ -46,7 +49,7 @@ public:
     void wait(int times);
 
     //输出路径
-    void displayOncePath(int num);
+    void displayNowPath(int num);
 
     //输出open与close表
     void ouputTable(QTextBrowser text, vector<string> v);
@@ -70,6 +73,10 @@ private slots:
     void on_pathTextBrowser_sourceChanged(const QUrl &arg1);
 
     void on_manuInputBtn_clicked();
+
+    void on_afterPathBtn_clicked();
+
+    void on_nextPathBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

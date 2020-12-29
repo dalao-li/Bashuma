@@ -47,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->autoOuputBtn->setDisabled(true);
     ui->manuOuputBtn->setDisabled(true);
     ui->horizontalSlider->setDisabled(true);
+    //禁用上一步下一步按钮
+    ui->afterPathBtn->setDisabled(true);
+    ui->nextPathBtn->setDisabled(true);
+
     //默认禁用所有LineEdit控件
     setLineStatus(originLine, true);
     setLineStatus(endLine, true);
@@ -175,8 +179,25 @@ QString MainWindow::getLinesValue(QLineEdit *a[9])
 }
 
 //显示单步路径，参数为当前的步数和当前状态
-void MainWindow::displayOncePath(int num)
+void MainWindow::displayNowPath(int num)
 {
+    //num范围
+    if (num < 0)
+    {
+        pathNum = 0;
+        QMessageBox::warning(NULL, "警告", "已到达初始状态");
+        return;
+    }
+    //到达终点
+    if (num >= game.path.size())
+    {
+        QMessageBox::warning(NULL, "警告", "已到达最终状态");
+        ui->pathTextBrowser->insertPlainText("共" + QString::number(game.path.size()) + "步\n\n");
+        //恢复
+        pathNum = 0;
+        ui->autoOuputBtn->setDisabled(false);
+        return;
+    }
     //清除当前路径
     clearLineValue(originLine);
     QString nowPath = QString::fromStdString(game.path[num]);
@@ -193,7 +214,7 @@ void MainWindow::displayOncePath(int num)
 void MainWindow::on_autoOuputBtn_clicked()
 {
     //异常判断
-    if (game.pathLen == 0)
+    if (game.path.size() == 0)
     {
         QMessageBox::warning(NULL, "警告", "请先生成路径");
         return;
@@ -206,7 +227,7 @@ void MainWindow::on_autoOuputBtn_clicked()
     ui->autoInputBtn->setDisabled(true);
     for (int i = 0; i < game.path.size(); i++)
     {
-        displayOncePath(i);
+        displayNowPath(i);
         //延时
         int time = 10 * (100 - ui->horizontalSlider->value());
         wait(time);
@@ -227,7 +248,7 @@ void MainWindow::on_manuOuputBtn_clicked()
         return;
     }
     //首步
-    if (game.path.size() == game.pathLen)
+    if (pathNum == 0)
     {
         setLineValue(str1, originLine);
         setLineValue(str2, endLine);
@@ -235,21 +256,9 @@ void MainWindow::on_manuOuputBtn_clicked()
     }
     //禁用自动执行按钮
     ui->autoOuputBtn->setDisabled(true);
-    //到达终点
-    if (game.pathLen <= 0)
-    {
-        QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.path.size()) + "步");
-        ui->pathTextBrowser->insertPlainText("共" + QString::number(game.path.size()) + "步\n\n");
-        //恢复
-        game.pathLen = game.path.size();
-        ui->autoOuputBtn->setDisabled(false);
-        return;
-    }
-
-    int num = game.path.size() - game.pathLen;
     //显示本次路径
-    displayOncePath(num);
-    game.pathLen--;
+    displayNowPath(pathNum);
+    pathNum += 1;
 }
 
 //自动随机生成两个状态
@@ -401,4 +410,14 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
 void MainWindow::on_pathTextBrowser_sourceChanged(const QUrl &arg1)
 {
     ui->pathTextBrowser->moveCursor(QTextCursor::End);
+}
+
+//上一步
+void MainWindow::on_afterPathBtn_clicked()
+{
+}
+
+//下一步
+void MainWindow::on_nextPathBtn_clicked()
+{
 }
