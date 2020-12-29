@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "bashuma.h"
+#include "path.h"
 #include <QLineEdit>
 #include <QTextBrowser>
 #include <vector>

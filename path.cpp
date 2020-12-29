@@ -4,7 +4,7 @@
 #include <iostream>
 #include <utility>
 #include <vector>
-#include "bashuma.h"
+#include "path.h"
 #include <cstdio>
 #include <algorithm>
 #include "mainwindow.h"

@@ -1,8 +1,7 @@
-#include <QSet>
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "bashuma.h"
+#include "path.h"
 #include <QDebug>
 #include <windows.h>
 #include <cstdlib>
