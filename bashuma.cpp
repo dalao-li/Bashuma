@@ -10,7 +10,6 @@
 #include "mainwindow.h"
 #include <QDebug>
 using namespace std;
-extern bool flag;
 
 State::State(string str, string fs, int g, int h)
 {

@@ -379,6 +379,10 @@ void MainWindow::on_clearBtn_clicked()
     ui->pathTextBrowser->clear();
     ui->open_textBrowser->clear();
     ui->close_textBrowser->clear();
+    //解除占用
+    vector<State>().swap(game.open);
+    vector<State>().swap(game.close);
+    vector<string>().swap(game.path);
 }
 
 //显示速度

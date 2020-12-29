@@ -53,7 +53,7 @@
    <widget class="QTextBrowser" name="pathTextBrowser">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>50</x>
       <y>350</y>
       <width>441</width>
       <height>311</height>
@@ -523,7 +523,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>200</x>
       <y>290</y>
       <width>141</width>
       <height>61</height>
@@ -542,8 +542,8 @@
    <widget class="QPushButton" name="autoOuputBtn">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>690</y>
+      <x>200</x>
+      <y>680</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -569,8 +569,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="autoInputBtn">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>690</y>
+      <x>60</x>
+      <y>680</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -598,8 +598,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="clearBtn">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>750</y>
+      <x>340</x>
+      <y>740</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -625,8 +625,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="manuOuputBtn">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>750</y>
+      <x>200</x>
+      <y>740</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -686,8 +686,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="findPathBtn">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>750</y>
+      <x>60</x>
+      <y>740</y>
       <width>131</width>
       <height>51</height>
      </rect>
@@ -757,8 +757,8 @@ border-style: outset;</string>
    <widget class="QPushButton" name="manuInputBtn">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>690</y>
+      <x>340</x>
+      <y>680</y>
       <width>131</width>
       <height>51</height>
      </rect>
