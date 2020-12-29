@@ -523,7 +523,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>90</x>
       <y>290</y>
       <width>141</width>
       <height>61</height>
@@ -781,6 +781,25 @@ border-style: outset;</string>
     </property>
     <property name="text">
      <string>手动输入</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="pathLabel">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>300</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>第0步 共0步</string>
     </property>
    </widget>
   </widget>

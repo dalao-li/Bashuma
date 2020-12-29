@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     //默认禁用所有LineEdit控件
     setLineStatus(originLine, true);
     setLineStatus(endLine, true);
+    ui->pathLabel->setText("");
 }
 
 MainWindow::~MainWindow()
@@ -181,8 +182,11 @@ void MainWindow::displayOncePath(int num)
     QString nowPath = QString::fromStdString(game.path[num]);
     //重新设置当前路径
     setLineValue(nowPath, originLine);
-    QString s = QString("第%0步,共%1步:%2\n").arg(QString::number(num + 1)).arg(QString::number(game.path.size())).arg(nowPath);
-    ui->pathTextBrowser->insertPlainText(s);
+    //pathTextBrowser输出
+    QString s = QString("第%0步,共%1步").arg(QString::number(num + 1)).arg(QString::number(game.path.size()));
+    ui->pathTextBrowser->insertPlainText(s + ": " + nowPath + "\n");
+    //更新pathLable
+    ui->pathLabel->setText(s);
 }
 
 //自动输出八数码求解路径
@@ -383,6 +387,8 @@ void MainWindow::on_clearBtn_clicked()
     vector<State>().swap(game.open);
     vector<State>().swap(game.close);
     vector<string>().swap(game.path);
+    //恢复pathLabel
+    ui->pathLabel->setText("");
 }
 
 //显示速度
