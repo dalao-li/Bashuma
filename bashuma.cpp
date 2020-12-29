@@ -171,7 +171,6 @@ void Game::start()
 //生成整个转移过程的路径
 void Game::findPath()
 {
-    qDebug() << "开始生成路径" << endl;
     vector<State> v;
     v.insert(v.end(), open.begin(), open.end());
     v.insert(v.end(), close.begin(), close.end());
