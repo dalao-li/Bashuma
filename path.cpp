@@ -1,6 +1,3 @@
-//
-// Created by _casper on 2019/11/10.
-//
 #include <iostream>
 #include <utility>
 #include <vector>
@@ -9,6 +6,7 @@
 #include <algorithm>
 #include "mainwindow.h"
 #include <QDebug>
+
 using namespace std;
 
 State::State(string str, string fs, int g, int h)
@@ -30,7 +28,8 @@ bool State::operator==(const State &s1) const
     return s1.str == str;
 }
 
-void State::upState(const string &fss, int gs)
+//更新父节点和g值
+void State::update(const string &fss, int gs)
 {
     this->fs = fss;
     this->f = gs + this->h;
@@ -92,7 +91,7 @@ void Game::updateState(State St)
                 else if (St.g + 1 < open[n].g)
                 {
                     //将当前状态的节点设为交换后状态的父节点,并更新g值
-                    open[n].upState(St.str, St.g + 1);
+                    open[n].update(St.str, St.g + 1);
 
                     //写入QT控件
                     openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(ns) + "在open表中,g值更新为" + QString::number(St.g + 1));
@@ -114,11 +113,11 @@ void Game::updateState(State St)
 }
 
 //给定一个字符串返回它在容器的下标
-int Game::findStrIndex(const string &str, const vector<State> &v)
+int Game::findStrIndex(const string &s, const vector<State> &v)
 {
     for (int i = 0, size = v.size(); i < size; ++i)
     {
-        if (v[i].str == str)
+        if (v[i].str == s)
         {
             return i;
         }

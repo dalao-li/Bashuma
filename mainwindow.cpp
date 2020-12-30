@@ -245,16 +245,16 @@ void MainWindow::on_autoInputBtn_clicked()
     //解禁计算路径按钮
     ui->findPathBtn->setDisabled(false);
     srand((int)time(0));
-    string s1 = "";
-    string s2 = "";
+    string s1 = getRandomStr();
+    string s2 = getRandomStr();
     while (1)
     {
-        s1 = getRandomStr();
-        s2 = getRandomStr();
         if (game.isOdevity(s1, s2))
         {
             break;
         }
+        s1 = getRandomStr();
+        s2 = getRandomStr();
     }
     originInput = QString::fromStdString(s1);
     endInput = QString::fromStdString(s2);
@@ -401,4 +401,18 @@ void MainWindow::on_nextPathBtn_clicked()
     }
     pathNum++;
     ouputPath(pathNum);
+}
+
+//关闭窗体
+void MainWindow::on_closeBtn_clicked()
+{
+    QMessageBox msgBox;
+    msgBox.setText("提示");
+    msgBox.setInformativeText("确实要退出吗?");
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    if(msgBox.exec() == QMessageBox::Ok){
+         QApplication::exit();
+    }
+
 }

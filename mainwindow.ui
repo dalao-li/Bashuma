@@ -842,6 +842,33 @@ border-style: outset;</string>
      <string>W, Up</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="closeBtn">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>750</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 10px;  
+background-color: rgb(170, 170, 0);
+border: 2px groove rgb(170, 170, 0);
+border-style: outset;</string>
+    </property>
+    <property name="text">
+     <string>关闭</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

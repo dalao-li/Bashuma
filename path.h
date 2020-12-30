@@ -1,5 +1,5 @@
 //
-// Created by _casper on 2019/11/10.
+// Created by _casper on 2020/12/30.
 //
 #ifndef BASHUMA_BASHUMA_H
 #define BASHUMA_BASHUMA_H
@@ -24,7 +24,7 @@ public:
     State(string str, string fs, int g, int h);
 
     //更新父节点与g值
-    void upState(const string &fss, int gs);
+    void update(const string &fss, int gs);
 
     bool operator<(const State &s1) const;
 
@@ -36,18 +36,17 @@ public:
 typedef class Game
 {
 public:
-    //八数码最初状态
-    string os;
-    //八数码最终状态
-    string es;
+    //八数码最初状态,最终状态
+    string os, es;
     //标志量
     bool flag;
-    vector<State> open;
-    vector<State> close;
+
+    State state;
+
+    vector<State> open, close;
     vector<string> path;
-    
-    vector<QString> openTable;
-    vector<QString> closeTable;
+
+    vector<QString> openTable, closeTable;
     //可移动路径
     // 0,1,2
     // 3,4,5
@@ -71,7 +70,7 @@ public:
     void updateState(State St);
 
     //寻找节点的坐标
-    int findStrIndex(const string &str, const vector<State> &v);
+    int findStrIndex(const string &s, const vector<State> &v);
 
     //设置h值
     int setWeight(string str);

@@ -76,6 +76,8 @@ private slots:
 
     void on_nextPathBtn_clicked();
 
+    void on_closeBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
 
