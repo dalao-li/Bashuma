@@ -5,16 +5,16 @@
  * @Email: dalao_li@163.com
  * @Date: 2022-09-08 23:03:10
  * @LastEditors: DaLao
- * @LastEditTime: 2022-09-09 22:44:48
+ * @LastEditTime: 2022-09-09 23:41:07
  */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "path.h"
-#include <QMainWindow>
-#include "mainwindow.h"
+#include "include/path.h"
 #include "ui_mainwindow.h"
+#include "mainwindow.h"
 
+#include <QMainWindow>
 #include <QLineEdit>
 #include <QTextBrowser>
 #include <QMessageBox>

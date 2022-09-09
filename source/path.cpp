@@ -1,4 +1,4 @@
-#include "path.h"
+#include "include/path.h"
 
 State::State(std::string now_node, std::string father_node, int g, int h)
 {

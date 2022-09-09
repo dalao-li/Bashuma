@@ -1,4 +1,13 @@
-#include "mainwindow.h"
+/*
+ * @Description:
+ * @Version: 1.0
+ * @Author: DaLao
+ * @Email: dalao_li@163.com
+ * @Date: 2022-09-08 23:03:10
+ * @LastEditors: DaLao
+ * @LastEditTime: 2022-09-09 23:47:58
+ */
+#include "include/mainwindow.h"
 
 #include <QApplication>
 int main(int argc, char *argv[])
