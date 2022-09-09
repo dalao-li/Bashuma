@@ -116,7 +116,7 @@ int Game::get_node_index(const std::string &s, const std::vector<State> &v)
     return -1;
 }
 
-// 生成h值
+// 生成w值
 int Game::set_w_value(std::string node)
 {
     // 即求出当前字符串str中的每个元素str[i]在str中的下标i与str[i]在strend中的下标之差
@@ -153,11 +153,13 @@ void Game::find_path()
         }
         // 按f值排序
         std::sort(this->m_open.begin(), this->m_open.end());
+
         update_state(this->m_open[this->m_open.size() - 1]);
     }
 
     // 生成路径
     std::vector<State> v;
+
     v.insert(v.end(), this->m_open.begin(), this->m_open.end());
     v.insert(v.end(), this->m_close.begin(), this->m_close.end());
 

@@ -5,7 +5,7 @@
  * @Email: dalao_li@163.com
  * @Date: 2022-09-08 23:03:10
  * @LastEditors: DaLao
- * @LastEditTime: 2022-09-10 00:15:41
+ * @LastEditTime: 2022-09-10 00:37:31
  */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -97,14 +97,14 @@ protected:
 
     QLineEdit *originLine[9], *endLine[9];
 
-    Game game;
+    Game m_game;
 
-    QString start_input;
+    QString m_start_input;
 
-    QString end_input;
+    QString m_end_input;
 
     // 记录当前时第几步
-    int path_num = 0;
+    int m_step = 0;
 };
 
 #endif // MAINWINDOW_H
