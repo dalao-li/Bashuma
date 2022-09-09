@@ -1,46 +1,40 @@
-#include <iostream>
-#include <utility>
-#include <vector>
 #include "path.h"
-#include <cstdio>
-#include <algorithm>
-#include "mainwindow.h"
-#include <QDebug>
 
-using namespace std;
-
-State::State(string str, string fs, int g, int h)
+State::State(std::string now_node, std::string father_node, int g, int h)
 {
-    this->str = std::move(str);
-    this->fs = std::move(fs);
+    this->now_node = std::move(now_node);
+    this->father_node = std::move(father_node);
     this->f = g + h;
     this->g = g;
     this->h = h;
 }
 
-bool State::operator<(const State &s1) const
+bool State::operator<(const State &s) const
 {
-    return s1.f < f;
+    return s.f < f;
 }
 
-bool State::operator==(const State &s1) const
+bool State::operator==(const State &s) const
 {
-    return s1.str == str;
+    return s.now_node == now_node;
 }
 
 // 更新父节点和g值
-void State::update(const string &fss, int gs)
+void State::update(const std::string &father_node, int g)
 {
-    this->fs = fss;
-    this->f = gs + this->h;
-    this->g = gs;
+    this->father_node = father_node;
+    this->f = g + this->h;
+    this->g = g;
 }
 
-Game::Game(string os, string es) : os(std::move(os)),
-                                   es(std::move(es)) {}
+Game::Game(std::string start_str, std::string end_str)
+{
+    this->start_str = std::move(start_str);
+    this->end_str = std::move(end_str);
+}
 
 // 判断两个字符的奇偶性
-bool Game::isOdevity(string os, string es)
+bool Game::is_odevity(std::string start_str, std::string end_str)
 {
     int oss = 0, fss = 0;
     for (int i = 1; i < 9; ++i)
@@ -48,11 +42,11 @@ bool Game::isOdevity(string os, string es)
         int a = 0, b = 0;
         for (int j = 0; j < i; j++)
         {
-            if (os[j] > os[i] && os[i] != '0')
+            if (start_str[j] > start_str[i] && start_str[i] != '0')
             {
                 a++;
             }
-            if (es[j] > es[i] && es[i] != '0')
+            if (end_str[j] > end_str[i] && end_str[i] != '0')
             {
                 b++;
             }
@@ -63,43 +57,66 @@ bool Game::isOdevity(string os, string es)
     return oss % 2 == fss % 2;
 }
 
-// 更新状态
-void Game::updateState(State state)
+// 给定一个字符串返回它在容器的下标
+int Game::get_node_index(const std::string &s, const std::vector<State> &v)
 {
+    for (int i = 0; i < v.size(); ++i)
+    {
+        if (v[i].now_node == s)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// 更新状态
+void Game::update_state(State state)
+{
+    std::stringstream stream;
+
     // 空白位置下标
-    int b = state.str.find('0');
+    int black_index = state.now_node.find('0');
     for (int i = 0; i < 4; i++)
     {
         // 该方向可达
-        if (move[b][i] != -1)
+        if (move[black_index][i] != -1)
         {
-            string ns = state.str;
+            std::string next_str = state.now_node;
             // 交换空白位置与它可达位置的元素
-            swap(ns[move[b][i]], ns[b]);
+            std::swap(next_str[move[black_index][i]], next_str[black_index]);
             // 若交换后的字符串未在close表中
-            if (findStrIndex(ns, close) == -1)
+            if (get_node_index(next_str, close) == -1)
             {
-                int n = findStrIndex(ns, open);
+                int n = get_node_index(next_str, open);
                 // 若该字符串也未在open表中
                 if (n == -1)
                 {
                     // 写入QT控件
-                    openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(ns) + "不在open表中,加入");
-                    open.emplace_back(ns, state.str, state.g + 1, setWeight(ns));
+                    stream << (open_table.size() + 1) << ":" << next_str << "不在open表中,加入";
+
+                    open_table.push_back(QString::fromStdString(stream.str()));
+
+                    stream.str("");
+                    stream.clear();
+
+                    open.emplace_back(next_str, state.now_node, state.g + 1, set_w_value(next_str));
                 }
 
                 // 否则,若经过当前状态可以使路径更优
                 else if (state.g + 1 < open[n].g)
                 {
                     // 将当前状态的节点设为交换后状态的父节点,并更新g值
-                    open[n].update(state.str, state.g + 1);
+                    open[n].update(state.now_node, state.g + 1);
 
-                    // 写入QT控件
-                    openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(ns) + "在open表中,g值更新为" + QString::number(state.g + 1));
+                    stream << (open_table.size() + 1) << ":" << next_str << "在open表中,g值更新为" << (state.g + 1);
+                    open_table.push_back(QString::fromStdString(stream.str()));
+                    stream.str("");
+                    stream.clear();
                 }
             }
 
-            if (ns == es)
+            if (next_str == end_str)
             {
                 flag = true;
                 return;
@@ -112,49 +129,45 @@ void Game::updateState(State state)
     close.push_back(state);
 
     // 写入QT控件
-    openTable.push_back(QString::number(openTable.size() + 1) + ":" + QString::fromStdString(state.str + "被移除open表"));
-    closeTable.push_back(QString::number(closeTable.size() + 1) + ":" + QString::fromStdString(state.str + "被加入close表"));
-}
+    stream << (open_table.size() + 1) << ":" << state.now_node << "被移除open表";
+    open_table.push_back(QString::fromStdString(stream.str()));
 
-// 给定一个字符串返回它在容器的下标
-int Game::findStrIndex(const string &s, const vector<State> &v)
-{
-    for (int i = 0, size = v.size(); i < size; ++i)
-    {
-        if (v[i].str == s)
-        {
-            return i;
-        }
-    }
-    return -1;
+    stream.str("");
+    stream.clear();
+
+    stream << (close_table.size() + 1) << ":" << state.now_node << "被加入close表";
+    close_table.push_back(QString::fromStdString(stream.str()));
+
+    stream.str("");
+    stream.clear();
 }
 
 // 生成h值
-int Game::setWeight(string str)
+int Game::set_w_value(std::string now_node)
 {
     // 即求出当前字符串str中的每个元素str[i]在str中的下标i与str[i]在strend中的下标之差
     int sum = 0;
     for (int i = 0; i < 9; i++)
     {
-        if (i != int(str.find('0')))
+        if (i != int(now_node.find('0')))
         {
-            sum += abs(i - int(es.find(str[i])));
+            sum += abs(i - int(end_str.find(now_node[i])));
         }
     }
     return sum;
 }
 
 // 生成整个转移过程的路径
-void Game::findPath()
+void Game::find_path()
 {
-    if (!isOdevity(os, es))
+    if (!is_odevity(start_str, end_str))
     {
         return;
     }
     // 加入初始状态
-    open.emplace_back(os, " ", 0, 0);
+    open.emplace_back(start_str, " ", 0, 0);
 
-    updateState(open[0]);
+    update_state(open[0]);
 
     flag = false;
 
@@ -166,25 +179,25 @@ void Game::findPath()
         }
         // 按f值排序
         sort(open.begin(), open.end());
-        updateState(open[open.size() - 1]);
+        update_state(open[open.size() - 1]);
     }
 
     // 生成路径
-    vector<State> v;
+    std::vector<State> v;
     v.insert(v.end(), open.begin(), open.end());
     v.insert(v.end(), close.begin(), close.end());
 
     // 结束节点状态的下标
-    int t = findStrIndex(es, v);
+    int t = get_node_index(end_str, v);
 
-    while (v[t].fs != " ")
+    while (v[t].father_node != " ")
     {
-        path.push_back(v[t].str);
+        path.push_back(v[t].now_node);
         // 找寻下一个节点
-        t = findStrIndex(v[t].fs, v);
+        t = get_node_index(v[t].father_node, v);
     }
 
     // 加入起始节点
-    path.push_back(os);
+    path.push_back(start_str);
     reverse(path.begin(), path.end());
 }

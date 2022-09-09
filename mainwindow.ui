@@ -656,7 +656,7 @@ border-style: outset;</string>
      <number>2</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="findPathBtn">
+   <widget class="QPushButton" name="find_pathBtn">
     <property name="geometry">
      <rect>
       <x>90</x>

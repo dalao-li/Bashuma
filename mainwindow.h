@@ -1,11 +1,30 @@
+/*
+ * @Description:
+ * @Version: 1.0
+ * @Author: DaLao
+ * @Email: dalao_li@163.com
+ * @Date: 2022-09-08 23:03:10
+ * @LastEditors: DaLao
+ * @LastEditTime: 2022-09-09 22:44:48
+ */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include "path.h"
+#include <QMainWindow>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
 #include <QLineEdit>
 #include <QTextBrowser>
+#include <QMessageBox>
+#include <QDebug>
+#include <QTime>
+
 #include <vector>
+#include <windows.h>
+#include <cstdlib>
+#include <ctime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -14,23 +33,14 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-
     MainWindow(QWidget *parent = nullptr);
 
     ~MainWindow();
-
-    Game game;
-
-    QString originInput, endInput;
-
-    // 记录当前时第几步
-    int pathNum = 0;
 
     // 清除输入
     void clearLine(QLineEdit *a[9]);
@@ -45,7 +55,7 @@ public:
     QString getLineValue(QLineEdit *a[9]);
 
     // 产生随机字符串
-    string getRandomStr();
+    std::string getRandomStr();
 
     // 延时函数
     void wait(int times);
@@ -54,7 +64,7 @@ public:
     void ouputPath(int num);
 
     // 输出open与close表
-    void ouputTable(QTextBrowser text, vector<string> v);
+    void ouputTable(QTextBrowser text, std::vector<std::string> v);
 
     // 判断LineEdit的合法性
     bool judgeInput(QString s);
@@ -67,7 +77,7 @@ private slots:
 
     void on_clearBtn_clicked();
 
-    void on_findPathBtn_clicked();
+    void on_find_pathBtn_clicked();
 
     void on_horizontalSlider_valueChanged(int value);
 
@@ -82,10 +92,18 @@ private slots:
     void on_closeBtn_clicked();
 
 private:
-
     Ui::MainWindow *ui;
 
     QLineEdit *originLine[9], *endLine[9];
+
+    Game game;
+
+    QString start_input;
+
+    QString end_input;
+
+    // 记录当前时第几步
+    int path_num = 0;
 };
 
 #endif // MAINWINDOW_H
