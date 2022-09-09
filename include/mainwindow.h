@@ -5,12 +5,13 @@
  * @Email: dalao_li@163.com
  * @Date: 2022-09-08 23:03:10
  * @LastEditors: DaLao
- * @LastEditTime: 2022-09-09 23:41:07
+ * @LastEditTime: 2022-09-10 00:15:41
  */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "include/path.h"
+#include "include/Game.h"
+
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
@@ -91,7 +92,7 @@ private slots:
 
     void on_closeBtn_clicked();
 
-private:
+protected:
     Ui::MainWindow *ui;
 
     QLineEdit *originLine[9], *endLine[9];

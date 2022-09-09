@@ -5,12 +5,12 @@
  * @Email: dalao_li@163.com
  * @Date: 2022-09-09 23:00:11
  * @LastEditors: DaLao
- * @LastEditTime: 2022-09-09 23:35:28
+ * @LastEditTime: 2022-09-10 00:13:37
  */
 #ifndef GAME_H
 #define GAME_H
 
-#include "State.h"
+#include "include/State.h"
 
 #include <iostream>
 #include <vector>
@@ -41,12 +41,11 @@ public:
     int get_node_index(const std::string &s, const std::vector<State> &v);
 
     // 设置h值
-    int set_w(std::string str);
+    int set_w_value(std::string node);
 
     // 生成路径
     void find_path();
 
-protected:
     std::vector<State> m_open;
 
     std::vector<State> m_close;

@@ -181,13 +181,13 @@ void MainWindow::ouputPath(int num)
     // num范围
     if (num < 0)
     {
-        path_num = game.path.size();
+        path_num = game.m_path.size();
         // QMessageBox::warning(NULL, "警告", "已到达初始状态");
         return;
     }
 
     // 到达终点
-    if (num >= game.path.size())
+    if (num >= game.m_path.size())
     {
         path_num = 0;
         // 恢复自动执行按钮
@@ -198,13 +198,13 @@ void MainWindow::ouputPath(int num)
     // 清除当前路径
     clearLine(originLine);
 
-    QString nowPath = QString::fromStdString(game.path[num]);
+    QString nowPath = QString::fromStdString(game.m_path[num]);
 
     // 重新设置当前路径
     setLine(nowPath, originLine);
 
     // pathTextBrowser输出
-    QString s = QString("第%0步,共%1步").arg(QString::number(num + 1)).arg(QString::number(game.path.size()));
+    QString s = QString("第%0步,共%1步").arg(QString::number(num + 1)).arg(QString::number(game.m_path.size()));
 
     ui->pathTextBrowser->insertPlainText(s + ": " + nowPath + "\n");
     // 更新pathLable
@@ -215,7 +215,7 @@ void MainWindow::ouputPath(int num)
 void MainWindow::on_autoOuputBtn_clicked()
 {
     // 异常判断
-    if (game.path.size() == 0)
+    if (game.m_path.size() == 0)
     {
         QMessageBox::warning(NULL, "警告", "请先生成路径");
         return;
@@ -230,14 +230,14 @@ void MainWindow::on_autoOuputBtn_clicked()
     ui->afterPathBtn->setDisabled(true);
     ui->nextPathBtn->setDisabled(true);
 
-    for (uint32_t i = 0; i < game.path.size(); i++)
+    for (uint32_t i = 0; i < game.m_path.size(); i++)
     {
         ouputPath(i);
         // 延时
         wait(10 * (100 - ui->horizontalSlider->value()));
     }
 
-    QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.path.size()) + "步");
+    QMessageBox::warning(NULL, "警告", "已到达,共" + QString::number(game.m_path.size()) + "步");
 
     // 恢复清空按钮
     ui->clearBtn->setDisabled(false);
@@ -333,13 +333,13 @@ void MainWindow::on_find_pathBtn_clicked()
     setLineStatus(endLine, true);
 
     // 给状态f赋值
-    game.start_str = start_input.toStdString();
-    game.end_str = end_input.toStdString();
+    game.m_start_str = start_input.toStdString();
+    game.m_end_str = end_input.toStdString();
 
     // 开始计算八数码
     game.find_path();
 
-    QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.path.size()) + "步");
+    QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(game.m_path.size()) + "步");
 
     // 解禁自动执行,清空按钮,下一步按钮
     ui->autoOuputBtn->setDisabled(false);
@@ -350,14 +350,14 @@ void MainWindow::on_find_pathBtn_clicked()
     ui->horizontalSlider->setDisabled(false);
 
     // 输出open与close表
-    for (int i = 0, size = game.open_table.size(); i < size; i++)
+    for (int i = 0, size = game.m_open_table.size(); i < size; i++)
     {
-        ui->open_textBrowser->insertPlainText(game.open_table[i] + "\n\n");
+        ui->open_textBrowser->insertPlainText(game.m_open_table[i] + "\n\n");
     }
 
-    for (int i = 0, size = game.close_table.size(); i < size; i++)
+    for (int i = 0, size = game.m_close_table.size(); i < size; i++)
     {
-        ui->close_textBrowser->insertPlainText(game.close_table[i] + "\n\n");
+        ui->close_textBrowser->insertPlainText(game.m_close_table[i] + "\n\n");
     }
 }
 
@@ -403,9 +403,9 @@ void MainWindow::on_clearBtn_clicked()
     ui->close_textBrowser->clear();
 
     // 解除占用
-    std::vector<State>().swap(game.open);
-    std::vector<State>().swap(game.close);
-    std::vector<std::string>().swap(game.path);
+    std::vector<State>().swap(game.m_open);
+    std::vector<State>().swap(game.m_close);
+    std::vector<std::string>().swap(game.m_path);
 
     // 恢复pathLabel
     ui->pathLabel->setText("");
