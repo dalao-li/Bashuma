@@ -158,19 +158,19 @@ void Game::find_path()
     }
 
     // 生成路径
-    std::vector<State> v;
+    std::vector<State> path;
 
-    v.insert(v.end(), this->m_open.begin(), this->m_open.end());
-    v.insert(v.end(), this->m_close.begin(), this->m_close.end());
+    path.insert(path.end(), this->m_open.begin(), this->m_open.end());
+    path.insert(path.end(), this->m_close.begin(), this->m_close.end());
 
     // 结束节点状态的下标
-    int t = get_node_index(this->m_end_str, v);
+    int end_node_index = get_node_index(this->m_end_str, path);
 
-    while (v[t].get_father_node() != " ")
+    while (path[end_node_index].get_father_node() != " ")
     {
-        this->m_path.push_back(v[t].get_now_node());
+        this->m_path.push_back(path[end_node_index].get_now_node());
         // 找寻下一个节点
-        t = get_node_index(v[t].get_father_node(), v);
+        end_node_index = get_node_index(path[end_node_index].get_father_node(), path);
     }
 
     // 加入起始节点

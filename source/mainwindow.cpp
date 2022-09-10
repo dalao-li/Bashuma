@@ -1,9 +1,10 @@
-#include "include/mainwindow.h"
+#include "include/MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     // 窗口透明度
     setWindowOpacity(0.97);
     //  禁止最大化按钮
@@ -47,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     // 默认禁用所有LineEdit控件
     setLineStatus(originLine, true);
     setLineStatus(endLine, true);
+
     ui->pathLabel->setText("");
 }
 
@@ -76,7 +78,6 @@ bool MainWindow::judgeInput(QString s)
         }
         a[v[i] - '0'] = 1;
     }
-
     // 判断0-9数字是否都出现了
     for (int i = 0; i < 9; i++)
     {
@@ -120,25 +121,27 @@ void MainWindow::setLine(QString s, QLineEdit *a[9])
 std::string MainWindow::getRandomStr()
 {
     std::string s = "";
+    char a;
+    bool is_exist = false;
+
     while (s.size() < 9)
     {
-        int c = rand() % 10;
-        if (c != 9)
+        a = (rand() % 9) + '0';
+        is_exist = false;
+
+        for (int i = 0; i < s.size(); i++)
         {
-            char a = c + '0';
-            bool f = false;
-            for (int i = 0; i < s.size(); i++)
+            // 该字符已存在
+            if (s[i] == a)
             {
-                if (s[i] == a)
-                {
-                    f = true;
-                    break;
-                }
+                is_exist = true;
+                break;
             }
-            if (f == false)
-            {
-                s += a;
-            }
+        }
+
+        if (is_exist == false)
+        {
+            s += a;
         }
     }
     return s;
@@ -162,6 +165,7 @@ void MainWindow::wait(int times)
 QString MainWindow::getLineValue(QLineEdit *a[9])
 {
     QString s = "";
+
     for (int i = 0; i < 9; i++)
     {
         if (a[i]->text() == " ")
@@ -182,15 +186,15 @@ void MainWindow::ouputPath(int num)
     // num范围
     if (num < 0)
     {
-        m_step = m_game.m_path.size();
+        this->m_step = this->m_game.m_path.size();
         // QMessageBox::warning(NULL, "警告", "已到达初始状态");
         return;
     }
 
     // 到达终点
-    if (num >= m_game.m_path.size())
+    if (num >= this->m_game.m_path.size())
     {
-        m_step = 0;
+        this->m_step = 0;
         // 恢复自动执行按钮
         ui->autoOuputBtn->setDisabled(false);
         return;
@@ -204,12 +208,18 @@ void MainWindow::ouputPath(int num)
     // 重新设置当前路径
     setLine(nowPath, originLine);
 
-    // pathTextBrowser输出
-    QString s = QString("第%0步,共%1步").arg(QString::number(num + 1)).arg(QString::number(m_game.m_path.size()));
+    std::stringstream stream;
 
-    ui->pathTextBrowser->insertPlainText(s + ": " + nowPath + "\n");
+    stream << "第" << num + 1 << "步, 共" << m_game.m_path.size() << "步";
     // 更新pathLable
-    ui->pathLabel->setText(s);
+    ui->pathLabel->setText(QString::fromStdString(stream.str()));
+
+    // pathTextBrowser输出
+    stream << ": " << m_game.m_path[num] << std::endl;
+    ui->pathTextBrowser->insertPlainText(QString::fromStdString(stream.str()));
+
+    stream.str("");
+    stream.clear();
 }
 
 // 自动输出八数码求解路径
@@ -262,29 +272,26 @@ void MainWindow::on_autoInputBtn_clicked()
 
     srand((int)time(0));
 
-    std::string s1 = getRandomStr();
-    std::string s2 = getRandomStr();
+    std::string start_str = getRandomStr();
+    std::string end_str = getRandomStr();
 
     while (1)
     {
-        if (m_game.is_odevity(s1, s2))
+        if (m_game.is_odevity(start_str, end_str))
         {
             break;
         }
-        s1 = getRandomStr();
-        s2 = getRandomStr();
+        start_str = getRandomStr();
+        end_str = getRandomStr();
     }
-
-    m_start_input = QString::fromStdString(s1);
-    m_end_input = QString::fromStdString(s2);
 
     // 先清除输入
     clearLine(originLine);
     clearLine(endLine);
 
     // 设置
-    setLine(m_start_input, originLine);
-    setLine(m_end_input, endLine);
+    setLine(QString::fromStdString(start_str), originLine);
+    setLine(QString::fromStdString(end_str), endLine);
 }
 
 // 手动输入状态
@@ -306,18 +313,18 @@ void MainWindow::on_manuInputBtn_clicked()
 // 计算路径
 void MainWindow::on_find_pathBtn_clicked()
 {
-    m_start_input = getLineValue(originLine);
-    m_end_input = getLineValue(endLine);
+    this->m_start_input = getLineValue(originLine);
+    this->m_end_input = getLineValue(endLine);
 
     // 判断合法性
-    if (!judgeInput(m_start_input) || !judgeInput(m_end_input))
+    if (!judgeInput(this->m_start_input) || !judgeInput(this->m_end_input))
     {
         QMessageBox::warning(NULL, "警告", "请检查输入的合法性");
         return;
     }
 
     // 如果不可达
-    if (!m_game.is_odevity(m_start_input.toStdString(), m_end_input.toStdString()))
+    if (!this->m_game.is_odevity(this->m_start_input.toStdString(), this->m_end_input.toStdString()))
     {
         QMessageBox::warning(NULL, "警告", "不可达请重新输入");
 
@@ -334,13 +341,13 @@ void MainWindow::on_find_pathBtn_clicked()
     setLineStatus(endLine, true);
 
     // 给状态f赋值
-    m_game.m_start_str = m_start_input.toStdString();
-    m_game.m_end_str = m_end_input.toStdString();
+    this->m_game.m_start_str = m_start_input.toStdString();
+    this->m_game.m_end_str = m_end_input.toStdString();
 
     // 开始计算八数码
-    m_game.find_path();
+    this->m_game.find_path();
 
-    QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(m_game.m_path.size()) + "步");
+    QMessageBox::warning(NULL, "警告", "路径已经生成,共" + QString::number(this->m_game.m_path.size()) + "步");
 
     // 解禁自动执行,清空按钮,下一步按钮
     ui->autoOuputBtn->setDisabled(false);
@@ -351,14 +358,14 @@ void MainWindow::on_find_pathBtn_clicked()
     ui->horizontalSlider->setDisabled(false);
 
     // 输出open与close表
-    for (int i = 0, size = m_game.m_open_table.size(); i < size; i++)
+    for (int i = 0, size = this->m_game.m_open_table.size(); i < size; i++)
     {
-        ui->open_textBrowser->insertPlainText(m_game.m_open_table[i] + "\n\n");
+        ui->open_textBrowser->insertPlainText(this->m_game.m_open_table[i] + "\n\n");
     }
 
-    for (int i = 0, size = m_game.m_close_table.size(); i < size; i++)
+    for (int i = 0, size = this->m_game.m_close_table.size(); i < size; i++)
     {
-        ui->close_textBrowser->insertPlainText(m_game.m_close_table[i] + "\n\n");
+        ui->close_textBrowser->insertPlainText(this->m_game.m_close_table[i] + "\n\n");
     }
 }
 
@@ -404,9 +411,9 @@ void MainWindow::on_clearBtn_clicked()
     ui->close_textBrowser->clear();
 
     // 解除占用
-    std::vector<State>().swap(m_game.m_open);
-    std::vector<State>().swap(m_game.m_close);
-    std::vector<std::string>().swap(m_game.m_path);
+    std::vector<State>().swap(this->m_game.m_open);
+    std::vector<State>().swap(this->m_game.m_close);
+    std::vector<std::string>().swap(this->m_game.m_path);
 
     // 恢复pathLabel
     ui->pathLabel->setText("");
@@ -437,12 +444,12 @@ void MainWindow::on_nextPathBtn_clicked()
     // 解禁after按钮
     ui->afterPathBtn->setDisabled(false);
 
-    if (m_step == 0)
+    if (this->m_step == 0)
     {
         ouputPath(0);
     }
 
-    m_step++;
+    this->m_step++;
 
     ouputPath(m_step);
 }

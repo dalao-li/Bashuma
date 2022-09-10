@@ -5,7 +5,7 @@
  * @Email: dalao_li@163.com
  * @Date: 2022-09-08 23:03:10
  * @LastEditors: DaLao
- * @LastEditTime: 2022-09-10 00:37:31
+ * @LastEditTime: 2022-09-10 14:49:44
  */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -107,4 +107,4 @@ protected:
     int m_step = 0;
 };
 
-#endif // MAINWINDOW_H
+#endif
